@@ -43,15 +43,15 @@ function LoginForm() {
       } else {
         toast?.success("Login successful! Redirecting...");
         if (session?.user?.is_superuser === true) {
-          router.push("/superuser/dashboard");
+          router.push(`${process.env.NEXT_PUBLIC_SUPERUSER_URL}/superuser/dashboard`);
         } else if (session?.user?.is_staff === true) {
-          router.push("/superuser/dashboard");
+          router.push(`${process.env.NEXT_PUBLIC_SUPERUSER_URL}/superuser/dashboard`);
         } else if (session?.user?.is_sacco_admin === true) {
-          router.push("/sacco-admin/dashboard");
+          router.push(`${process.env.NEXT_PUBLIC_ADMIN_URL}/sacco-admin/dashboard`);
         } else if (session?.user?.is_member === true) {
-          router.push("/member/dashboard");
+          router.push(`${process.env.NEXT_PUBLIC_MEMBER_URL}/member/dashboard`);
         } else {
-          router.push("/member/dashboard");
+          router.push(`${process.env.NEXT_PUBLIC_MEMBER_URL}/member/dashboard`);
         }
       }
     } catch (error) {

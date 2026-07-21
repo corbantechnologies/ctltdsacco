@@ -46,7 +46,7 @@ export default function MemberHelpCenter() {
         },
         {
             q: "Can I use my savings as collateral?",
-            a: "Yes! Most saving products in Sprout can be used to self-guarantee your own loan, depending on the SACCO's specific rules."
+            a: "Yes! Most saving products can be used to self-guarantee your own loan, depending on the SACCO's specific rules."
         }
     ];
 
@@ -62,7 +62,7 @@ export default function MemberHelpCenter() {
                     How can we help you grow?
                 </h1>
                 <p className="text-slate-600 text-lg max-w-2xl mx-auto">
-                    Everything you need to know about managing your savings and loans with Sprout SACCO.
+                    Everything you need to know about managing your savings and loans with your SACCO.
                 </p>
             </div>
 

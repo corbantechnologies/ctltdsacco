@@ -3,12 +3,13 @@ import { formatCurrency } from "@/lib/utils";
 import { format } from "date-fns";
 import Link from "next/link";
 
-const LoanCard = ({ loan, memberPath }) => {
+const LoanCard = ({ loan, memberPath = "member" }) => {
   const nextDueDate =
-    loan.application_details?.projection_snapshot?.schedule?.[0]?.due_date;
+    loan?.application_details?.projection_snapshot?.schedule?.[0]?.due_date;
+  const ref = loan?.reference || loan?.account_number;
 
   return (
-    <Link href={`/${memberPath}/loans/${loan?.reference}`}>
+    <Link href={`/${memberPath}/loans/${ref}`}>
       <div className="flex flex-col space-y-3 p-4 border border-slate-100 bg-white rounded hover:shadow-sm transition-shadow cursor-pointer mb-2">
         <div className="flex justify-between items-center">
           <span className="font-medium text-sm text-gray-900">

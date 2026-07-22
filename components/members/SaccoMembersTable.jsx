@@ -128,14 +128,14 @@ function SaccoMembersTable({ members }) {
                     <TableRow key={member?.reference}>
                       <TableCell className="font-medium">
                         <Link
-                          href={`${baseRoute}/${member?.member_no}`}
+                          href={`${baseRoute}/${member?.member_no || member?.id}`}
                         >
-                          {member?.member_no}
+                          {member?.member_no || "N/A"}
                         </Link>
                       </TableCell>
                       <TableCell>
                         <Link
-                          href={`${baseRoute}/${member?.member_no}`}
+                          href={`${baseRoute}/${member?.member_no || member?.id}`}
                         >
                           {member?.first_name} {member?.last_name}
                         </Link>

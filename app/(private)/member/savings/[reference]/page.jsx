@@ -49,6 +49,7 @@ import jsPDF from "jspdf";
 import autoTable from "jspdf-autotable";
 import MpesaCreateDepositForm from "@/forms/savingsdeposits/MpesaCreateDepositForm";
 import toast from "react-hot-toast";
+import { SACCO_CONFIG } from "@/lib/sacco-config";
 
 function SavingsDetail() {
   const { reference } = useParams();
@@ -295,14 +296,16 @@ function SavingsDetail() {
             </div>
           </div>
 
-          <div className="flex items-center gap-3 w-full md:w-auto justify-stretch sm:justify-end">
-            <Button
-              className="bg-emerald-500 hover:bg-emerald-600 text-white font-semibold px-6 shadow-lg shadow-emerald-950/40 w-full sm:w-auto h-11 text-sm"
-              onClick={() => setDepositModalOpen(true)}
-            >
-              <ArrowDownLeft className="h-4 w-4 mr-2" /> Make Deposit
-            </Button>
-          </div>
+          {SACCO_CONFIG.enableMpesa && (
+            <div className="flex items-center gap-3 w-full md:w-auto justify-stretch sm:justify-end">
+              <Button
+                className="bg-emerald-500 hover:bg-emerald-600 text-white font-semibold px-6 shadow-lg shadow-emerald-950/40 w-full sm:w-auto h-11 text-sm"
+                onClick={() => setDepositModalOpen(true)}
+              >
+                <ArrowDownLeft className="h-4 w-4 mr-2" /> Make Deposit
+              </Button>
+            </div>
+          )}
         </div>
 
         {/* 4 Stat Cards Grid */}

@@ -28,6 +28,7 @@ import {
     BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
 import MpesaCreateLoanPaymentForm from "@/forms/loanrepayments/MpesaCreateLoanPayment";
+import { SACCO_CONFIG } from "@/lib/sacco-config";
 
 function LoanDetail() {
     const { reference } = useParams(); // This is the correct loan REFERENCE for URLs
@@ -156,12 +157,14 @@ const PersonalLoanDetailSkeleton = () => (
                         <p className="text-muted-foreground font-mono">{loan.account_number}</p>
                     </div>
 
-                    <Button
-                        className="bg-[#045e32] hover:bg-[#034625]"
-                        onClick={() => setIsMpesaModalOpen(true)}
-                    >
-                        Make Repayment
-                    </Button>
+                    {SACCO_CONFIG.enableMpesa && (
+                        <Button
+                            className="bg-[#045e32] hover:bg-[#034625]"
+                            onClick={() => setIsMpesaModalOpen(true)}
+                        >
+                            Make Repayment
+                        </Button>
+                    )}
                 </div>
 
                 {/* Tabs */}

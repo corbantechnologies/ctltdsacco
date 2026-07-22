@@ -367,8 +367,9 @@ const PersonalLoanDetailSkeleton = () => (
             <MpesaCreateLoanPaymentForm
                 isOpen={isMpesaModalOpen}
                 onClose={() => setIsMpesaModalOpen(false)}
-                loanReference={reference}           // Correct reference for URL
+                loanReference={reference}
                 loanAccountNumber={loan?.account_number}
+                payoffQuote={payoffQuote}
             />
         </div>
     );

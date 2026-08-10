@@ -11,7 +11,7 @@ import { Menu as MenuIcon, X as XIcon } from "lucide-react";
 const MENU_LINKS = [
   { label: "Dashboard", href: "/member/dashboard" },
   { label: "My Savings", href: "/member/savings" },
-  { label: "My Loans", href: "/member/loans" },
+  // { label: "My Loans", href: "/member/loans" },
   { label: "Loan Applications", href: "/member/loan-applications" },
   { label: "Guarantor Profile", href: "/member/guarantorprofile" },
   // { label: "Reports", href: "/member/reports" },

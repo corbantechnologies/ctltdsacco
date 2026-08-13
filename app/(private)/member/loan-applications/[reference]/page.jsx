@@ -431,7 +431,6 @@ const LoanApplicationDetailSkeleton = () => (
                         <TableHead>Due Date</TableHead>
                         <TableHead>Principal</TableHead>
                         <TableHead>{application.product_details?.interest_method === "Flat" ? "Interest (Flat)" : "Interest (Reducing)"}</TableHead>
-                        <TableHead>Processing Fee</TableHead>
                         <TableHead>Total Due</TableHead>
                         <TableHead>Status</TableHead>
                         <TableHead className="text-right">{application.product_details?.interest_method === "Flat" ? "Remaining Balance (Total)" : "Remaining Principal"}</TableHead>
@@ -448,9 +447,6 @@ const LoanApplicationDetailSkeleton = () => (
                           </TableCell>
                           <TableCell>
                             {formatCurrency(row.interest_due)}
-                          </TableCell>
-                          <TableCell>
-                            {formatCurrency(row.fee_due)}
                           </TableCell>
                           <TableCell className="font-semibold text-[#045e32]">
                             {formatCurrency(row.total_due)}
@@ -668,3 +664,5 @@ const LoanApplicationDetailSkeleton = () => (
     </div>
   );
 }
+
+

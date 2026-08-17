@@ -56,12 +56,14 @@ function LoanDetail() {
         const disbursements = (loan.disbursements || []).map(d => ({
             ...d,
             type: 'Disbursement',
-            date: d.created_at
+            date: d.created_at,
+            status: d.transaction_status || 'Completed'
         }));
         const payments = (loan.loan_payments || loan.repayments || []).map(p => ({
             ...p,
             type: 'Repayment',
-            date: p.created_at
+            date: p.created_at,
+            status: p.transaction_status || 'Completed'
         }));
         return [...disbursements, ...payments].sort((a, b) =>
             new Date(b.date) - new Date(a.date)
@@ -353,7 +355,17 @@ const PersonalLoanDetailSkeleton = () => (
                                                 </TableCell>
                                                 <TableCell className="font-semibold">{formatCurrency(t.amount)}</TableCell>
                                                 <TableCell>{t.payment_method || t.method || 'N/A'}</TableCell>
-                                                <TableCell>{t.status || 'Completed'}</TableCell>
+                                                <TableCell>
+                                                    {t.status === "Reversed" ? (
+                                                        <Badge variant="destructive" className="bg-red-100 text-red-700 border-red-200">Reversed</Badge>
+                                                    ) : t.status === "Failed" ? (
+                                                        <Badge variant="destructive">Failed</Badge>
+                                                    ) : t.status === "Pending" ? (
+                                                        <Badge variant="secondary">Pending</Badge>
+                                                    ) : (
+                                                        <Badge variant="default" className="bg-green-100 text-green-700 hover:bg-green-100">Completed</Badge>
+                                                    )}
+                                                </TableCell>
                                             </TableRow>
                                         ))}
                                         {paginatedTransactions.length === 0 && (

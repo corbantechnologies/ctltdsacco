@@ -535,10 +535,27 @@ function SavingsDetail() {
                           {t.method}
                         </TableCell>
                         <TableCell>
-                          <span className="inline-flex items-center gap-1 text-xs font-semibold text-emerald-700">
-                            <CheckCircle2 className="h-3.5 w-3.5 text-emerald-600" />
-                            {t.status}
-                          </span>
+                          {t.status === "Reversed" ? (
+                            <span className="inline-flex items-center gap-1 text-xs font-semibold text-red-700">
+                              <XCircle className="h-3.5 w-3.5 text-red-600" />
+                              Reversed
+                            </span>
+                          ) : t.status === "Failed" ? (
+                            <span className="inline-flex items-center gap-1 text-xs font-semibold text-red-700">
+                              <XCircle className="h-3.5 w-3.5 text-red-600" />
+                              Failed
+                            </span>
+                          ) : t.status === "Pending" ? (
+                            <span className="inline-flex items-center gap-1 text-xs font-semibold text-amber-700">
+                              <span className="h-2 w-2 rounded-full bg-amber-500 animate-pulse mr-1" />
+                              Pending
+                            </span>
+                          ) : (
+                            <span className="inline-flex items-center gap-1 text-xs font-semibold text-emerald-700">
+                              <CheckCircle2 className="h-3.5 w-3.5 text-emerald-600" />
+                              {t.status}
+                            </span>
+                          )}
                         </TableCell>
                       </TableRow>
                     ))}

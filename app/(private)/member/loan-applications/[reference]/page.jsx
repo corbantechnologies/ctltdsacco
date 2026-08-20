@@ -2,6 +2,7 @@
 
 import React, { use, useMemo, useState } from "react";
 import { format } from "date-fns";
+import { useRouter } from "next/navigation";
 import { useFetchLoanApplicationDetail } from "@/hooks/loanapplications/actions";
 import MemberLoadingSpinner from "@/components/general/MemberLoadingSpinner";
 import { Button } from "@/components/ui/button";
@@ -41,6 +42,7 @@ import {
   Send,
   Users,
   Loader2,
+  Trash2,
 } from "lucide-react";
 import { MemberUpdateLoanApplication } from "@/forms/loanapplications/MemberUpdateLoanApplication";
 import CreateGuaranteeRequest from "@/forms/guaranteerequests/CreateGuaranteeRequest";
@@ -58,6 +60,7 @@ import {
   submitLoanApplication,
   acceptAmendment,
   rejectAmendment,
+  deleteLoanApplication,
 } from "@/services/loanapplications";
 import EmptyState from "@/components/general/EmptyState";
 
@@ -70,6 +73,7 @@ export default function LoanApplicationDetail({ params }) {
     refetch,
   } = useFetchLoanApplicationDetail(reference);
   const token = useAxiosAuth();
+  const router = useRouter();
   const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
   const [isGuarantorModalOpen, setIsGuarantorModalOpen] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -160,6 +164,26 @@ export default function LoanApplicationDetail({ params }) {
     } catch (error) {
       console.error("Rejection failed", error);
       toast.error("Failed to reject amendment.");
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  const handleDeleteApplication = async () => {
+    if (
+      !confirm(
+        "Are you sure you want to delete this loan application? This action cannot be undone."
+      )
+    )
+      return;
+    setIsSubmitting(true);
+    try {
+      await deleteLoanApplication(reference, token);
+      toast.success("Loan application deleted successfully.");
+      router.push("/member/loan-applications");
+    } catch (error) {
+      console.error("Deletion failed", error);
+      toast.error("Failed to delete application. Please try again.");
     } finally {
       setIsSubmitting(false);
     }
@@ -279,6 +303,15 @@ const LoanApplicationDetailSkeleton = () => (
             </Badge>
             {application.status === "Pending" && (
               <>
+                <Button
+                  variant="outline"
+                  onClick={handleDeleteApplication}
+                  className="border-red-600 text-red-600 hover:bg-red-50 w-full sm:w-auto"
+                  disabled={isSubmitting}
+                >
+                  <Trash2 className="mr-2 h-4 w-4" />
+                  Delete Application
+                </Button>
                 <Button
                   variant="outline"
                   onClick={() => setIsUpdateModalOpen(true)}

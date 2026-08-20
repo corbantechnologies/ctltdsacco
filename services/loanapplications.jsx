@@ -37,6 +37,11 @@ export const updateLoanApplication = async (reference, values, token) => {
     await apiActions?.patch(`/api/v1/loanapplications/${reference}/`, values, token)
 }
 
+export const deleteLoanApplication = async (reference, token) => {
+    await apiActions?.delete(`/api/v1/loanapplications/${reference}/`, token)
+}
+
+
 export const submitForAmendment = async (reference, token) => {
     await apiActions?.post(`/api/v1/loanapplications/${reference}/submit-amendment/`, {}, token)
 }

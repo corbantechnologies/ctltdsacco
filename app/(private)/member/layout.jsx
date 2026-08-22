@@ -1,4 +1,5 @@
-import MemberNavbar from "@/components/members/Navbar";
+"use client";
+import MemberNavbar, { MemberSidebarProvider, useMemberSidebar } from "@/components/members/Navbar";
 import React from "react";
 
 const metadata = {
@@ -6,12 +7,25 @@ const metadata = {
   description: "Member Dashboard",
 };
 
+function MemberContent({ children }) {
+  const { isCollapsed } = useMemberSidebar();
+  return (
+    <main className="transition-all duration-300">
+      <div className={`md:${isCollapsed ? "pl-0" : "pl-64"}`}>
+        {children}
+      </div>
+    </main>
+  );
+}
+
 function MemberLayout({ children }) {
   return (
-    <div className="min-h-screen bg-white">
-      <MemberNavbar />
-      <main className="md:pl-64">{children}</main>
-    </div>
+    <MemberSidebarProvider>
+      <div className="min-h-screen bg-background">
+        <MemberNavbar />
+        <MemberContent>{children}</MemberContent>
+      </div>
+    </MemberSidebarProvider>
   );
 }
 

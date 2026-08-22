@@ -11,7 +11,7 @@ function MemberContent({ children }) {
   const { isCollapsed } = useMemberSidebar();
   return (
     <main className="transition-all duration-300">
-      <div className={`md:${isCollapsed ? "pl-0" : "pl-64"}`}>
+      <div className={`transition-all duration-300 ${isCollapsed ? "md:pl-0" : "md:pl-64"}`}>
         {children}
       </div>
     </main>

@@ -14,7 +14,7 @@ import {
   Moon,
   Sun,
 } from "lucide-react";
-import { useTheme } from "next-themes";
+
 
 // ─── Sidebar Context ──────────────────────────────────────────────────────────
 export const MemberSidebarContext = createContext({ isCollapsed: false, toggle: () => {} });
@@ -45,24 +45,7 @@ export function MemberSidebarProvider({ children }) {
   );
 }
 
-// ─── Dark Mode Toggle ─────────────────────────────────────────────────────────
-function DarkModeToggle() {
-  const { theme, setTheme } = useTheme();
-  const [mounted, setMounted] = useState(false);
-  useEffect(() => setMounted(true), []);
-  if (!mounted) return <div className="w-9 h-9" />;
-  return (
-    <Button
-      variant="ghost"
-      size="icon"
-      className="text-white hover:bg-white/10"
-      onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-      aria-label="Toggle dark mode"
-    >
-      {theme === "dark" ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
-    </Button>
-  );
-}
+// --- Removed Dark Mode Toggle ---
 
 const MENU_LINKS = [
   { label: "Dashboard", href: "/member/dashboard" },
@@ -173,7 +156,7 @@ function MemberNavbar() {
             </span>
           </Link>
         </div>
-        <DarkModeToggle />
+        
       </header>
 
       {/* Mobile Sidebar */}

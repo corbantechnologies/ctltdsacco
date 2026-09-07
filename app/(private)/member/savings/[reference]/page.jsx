@@ -51,6 +51,19 @@ import MpesaCreateDepositForm from "@/forms/savingsdeposits/MpesaCreateDepositFo
 import toast from "react-hot-toast";
 import { SACCO_CONFIG } from "@/lib/sacco-config";
 
+const PersonalSavingDetailSkeleton = () => (
+  <div className="mx-auto p-4 sm:p-6 space-y-6 animate-pulse">
+    <div className="h-4 w-48 bg-slate-200 rounded" />
+    <div className="h-28 bg-slate-200 rounded-xl" />
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+      {[...Array(4)].map((_, i) => (
+        <div key={i} className="h-24 bg-slate-200 rounded-xl" />
+      ))}
+    </div>
+    <div className="h-96 bg-slate-200 rounded-xl" />
+  </div>
+);
+
 function SavingsDetail() {
   const { reference } = useParams();
   const [activeTab, setActiveTab] = useState("overview");
@@ -81,14 +94,14 @@ function SavingsDetail() {
       type: "Deposit",
       method: deposit.payment_method || "M-Pesa / Bank",
       status: deposit.transaction_status || "Completed",
-      date: deposit.created_at,
+      date: deposit.transaction_date || deposit.created_at,
     }));
     const withdrawals = (saving.withdrawals || []).map((withdrawal) => ({
       ...withdrawal,
       type: "Withdrawal",
       method: withdrawal.payment_method || "N/A",
       status: withdrawal.transaction_status || "Completed",
-      date: withdrawal.created_at,
+      date: withdrawal.transaction_date || withdrawal.created_at,
     }));
     return [...deposits, ...withdrawals].sort(
       (a, b) => new Date(b.date) - new Date(a.date)
@@ -149,8 +162,13 @@ function SavingsDetail() {
       maximumFractionDigits: 2,
     })}`;
 
-  const formatDate = (dateStr) =>
-    dateStr ? format(new Date(dateStr), "MMM dd, yyyy · hh:mm a") : "N/A";
+  const formatDate = (dateStr) => {
+    if (!dateStr) return "N/A";
+    const d = new Date(dateStr.includes("T") ? dateStr : `${dateStr}T00:00:00`);
+    return dateStr.includes("T")
+      ? format(d, "MMM dd, yyyy · hh:mm a")
+      : format(d, "MMM dd, yyyy");
+  };
 
   const copyAccountNumber = () => {
     if (saving?.account_number) {
@@ -205,19 +223,6 @@ function SavingsDetail() {
 
     doc.save(`savings_statement_${saving?.account_number || "account"}.pdf`);
   };
-
-  const PersonalSavingDetailSkeleton = () => (
-    <div className="mx-auto p-4 sm:p-6 space-y-6 animate-pulse">
-      <div className="h-4 w-48 bg-slate-200 rounded" />
-      <div className="h-28 bg-slate-200 rounded-xl" />
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-        {[...Array(4)].map((_, i) => (
-          <div key={i} className="h-24 bg-slate-200 rounded-xl" />
-        ))}
-      </div>
-      <div className="h-96 bg-slate-200 rounded-xl" />
-    </div>
-  );
 
   if (isLoadingSaving || isLoadingMember) {
     return (
@@ -504,7 +509,7 @@ function SavingsDetail() {
                 <Table>
                   <TableHeader>
                     <TableRow className="bg-slate-50/80">
-                      <TableHead className="text-xs font-bold text-slate-700">Date & Time</TableHead>
+                      <TableHead className="text-xs font-bold text-slate-700">Transaction Date</TableHead>
                       <TableHead className="text-xs font-bold text-slate-700">Type</TableHead>
                       <TableHead className="text-xs font-bold text-slate-700">Amount</TableHead>
                       <TableHead className="text-xs font-bold text-slate-700">Payment Method</TableHead>

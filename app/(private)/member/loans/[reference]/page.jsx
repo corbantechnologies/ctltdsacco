@@ -28,7 +28,29 @@ import {
     BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
 import MpesaCreateLoanPaymentForm from "@/forms/loanrepayments/MpesaCreateLoanPayment";
-import { SACCO_CONFIG } from "@/lib/sacco-config";
+const PersonalLoanDetailSkeleton = () => (
+  <div className="mx-auto p-4 sm:p-6 space-y-6 animate-pulse">
+    <div className="h-4 w-48 bg-slate-200 rounded" />
+    <div className="flex justify-between items-center">
+      <div className="space-y-2">
+        <div className="h-6 w-64 bg-slate-200 rounded" />
+        <div className="h-4 w-40 bg-slate-200 rounded" />
+      </div>
+      <div className="h-10 w-32 bg-slate-200 rounded" />
+    </div>
+    <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+      <div className="lg:col-span-2 space-y-6">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-2">
+          <div className="h-24 bg-slate-200 rounded-lg" />
+          <div className="h-24 bg-slate-200 rounded-lg" />
+          <div className="h-24 bg-slate-200 rounded-lg" />
+        </div>
+        <div className="h-96 bg-slate-200 rounded-lg" />
+      </div>
+      <div className="h-96 bg-slate-200 rounded-lg" />
+    </div>
+  </div>
+);
 
 function LoanDetail() {
     const { reference } = useParams(); // This is the correct loan REFERENCE for URLs
@@ -56,13 +78,13 @@ function LoanDetail() {
         const disbursements = (loan.disbursements || []).map(d => ({
             ...d,
             type: 'Disbursement',
-            date: d.created_at,
+            date: d.transaction_date || d.created_at,
             status: d.transaction_status || 'Completed'
         }));
         const payments = (loan.loan_payments || loan.repayments || []).map(p => ({
             ...p,
             type: 'Repayment',
-            date: p.created_at,
+            date: p.transaction_date || p.created_at,
             status: p.transaction_status || 'Completed'
         }));
         return [...disbursements, ...payments].sort((a, b) =>
@@ -90,31 +112,7 @@ function LoanDetail() {
     );
 
     const formatCurrency = (amount) => `KES ${parseFloat(amount || 0).toFixed(2)}`;
-    const formatDate = (dateStr) => dateStr ? format(new Date(dateStr), "MMM dd, yyyy") : "N/A";
-
-const PersonalLoanDetailSkeleton = () => (
-  <div className="mx-auto p-4 sm:p-6 space-y-6 animate-pulse">
-    <div className="h-4 w-48 bg-slate-200 rounded" />
-    <div className="flex justify-between items-center">
-      <div className="space-y-2">
-        <div className="h-6 w-64 bg-slate-200 rounded" />
-        <div className="h-4 w-40 bg-slate-200 rounded" />
-      </div>
-      <div className="h-10 w-32 bg-slate-200 rounded" />
-    </div>
-    <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-      <div className="lg:col-span-2 space-y-6">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-2">
-          <div className="h-24 bg-slate-200 rounded-lg" />
-          <div className="h-24 bg-slate-200 rounded-lg" />
-          <div className="h-24 bg-slate-200 rounded-lg" />
-        </div>
-        <div className="h-96 bg-slate-200 rounded-lg" />
-      </div>
-      <div className="h-96 bg-slate-200 rounded-lg" />
-    </div>
-  </div>
-);
+    const formatDate = (dateStr) => dateStr ? format(new Date(dateStr.includes("T") ? dateStr : `${dateStr}T00:00:00`), "MMM dd, yyyy") : "N/A";
 
     if (isLoadingLoan || isLoadingMember) {
         return (
@@ -337,7 +335,7 @@ const PersonalLoanDetailSkeleton = () => (
                                 <Table>
                                     <TableHeader>
                                         <TableRow className="bg-gray-50">
-                                            <TableHead>Date</TableHead>
+                                            <TableHead>Transaction Date</TableHead>
                                             <TableHead>Type</TableHead>
                                             <TableHead>Amount</TableHead>
                                             <TableHead>Method</TableHead>

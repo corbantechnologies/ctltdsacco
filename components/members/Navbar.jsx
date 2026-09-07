@@ -19,6 +19,8 @@ import {
   HelpCircle,
   LogOut,
   User,
+  CreditCard,
+  TrendingUp,
 } from "lucide-react";
 
 // ─── Sidebar Context ──────────────────────────────────────────────────────────
@@ -26,14 +28,15 @@ export const MemberSidebarContext = createContext({ isCollapsed: false, toggle: 
 export const useMemberSidebar = () => useContext(MemberSidebarContext);
 
 export function MemberSidebarProvider({ children }) {
-  const [isCollapsed, setIsCollapsed] = useState(false);
-
-  useEffect(() => {
-    try {
-      const stored = localStorage.getItem("sacco-member-sidebar-collapsed");
-      if (stored !== null) setIsCollapsed(JSON.parse(stored));
-    } catch {}
-  }, []);
+  const [isCollapsed, setIsCollapsed] = useState(() => {
+    if (typeof window !== "undefined") {
+      try {
+        const stored = localStorage.getItem("sacco-member-sidebar-collapsed");
+        if (stored !== null) return JSON.parse(stored);
+      } catch {}
+    }
+    return false;
+  });
 
   const toggle = () => {
     setIsCollapsed((prev) => {
@@ -53,8 +56,10 @@ export function MemberSidebarProvider({ children }) {
 const MENU_LINKS = [
   { label: "Dashboard", href: "/member/dashboard", icon: LayoutDashboard },
   { label: "My Savings", href: "/member/savings", icon: PiggyBank },
+  { label: "My Loans", href: "/member/loans", icon: CreditCard },
   { label: "Loan Applications", href: "/member/loan-applications", icon: FileText },
   { label: "Guarantor Profile", href: "/member/guarantorprofile", icon: ShieldCheck },
+  { label: "Reports & Statements", href: "/member/reports", icon: TrendingUp },
   { label: "Profile Settings", href: "/member/settings", icon: Settings },
   { label: "Help Center", href: "/member/help", icon: HelpCircle },
 ];
@@ -144,7 +149,7 @@ function MemberNavbar() {
       {/* Top Navbar */}
       <header
         className={`bg-[var(--primary)] text-white sticky top-0 z-30 shadow-md h-16 flex items-center justify-between px-4 md:px-6 transition-all duration-300 ${
-          isCollapsed ? "md:pl-6" : "md:pl-[17rem]"
+          isCollapsed ? "md:pl-6" : "md:pl-64"
         }`}
       >
         <div className="flex items-center gap-3">

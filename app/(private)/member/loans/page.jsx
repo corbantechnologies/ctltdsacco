@@ -13,9 +13,6 @@ import {
     BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
 
-function LoansPage() {
-    const { data: loans, isLoading, isError } = useFetchLoans();
-
 const PersonalLoansSkeleton = () => (
   <div className="w-full px-4 sm:px-6 py-6 space-y-6 animate-pulse">
     <div className="h-4 w-48 bg-slate-200 rounded" />
@@ -27,6 +24,9 @@ const PersonalLoansSkeleton = () => (
     </div>
   </div>
 );
+
+function LoansPage() {
+    const { data: loans, isLoading, isError } = useFetchLoans();
 
     if (isLoading) {
         return (

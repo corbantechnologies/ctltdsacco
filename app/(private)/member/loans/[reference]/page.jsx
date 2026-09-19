@@ -106,6 +106,22 @@ function LoanDetail() {
         });
     }, [allTransactions, monthFilter, statusFilter]);
 
+    const availableMonths = useMemo(() => {
+        const months = new Set();
+        allTransactions.forEach((t) => {
+            if (t.date) {
+                const d = new Date(t.date);
+                if (!isNaN(d.getTime())) {
+                    const key = format(d, "yyyy-MM");
+                    months.add(key);
+                }
+            }
+        });
+        return Array.from(months).sort().reverse();
+    }, [allTransactions]);
+
+    const totalPages = Math.ceil(filteredTransactions.length / itemsPerPage) || 1;
+
     const paginatedTransactions = filteredTransactions.slice(
         (currentPage - 1) * itemsPerPage,
         currentPage * itemsPerPage
@@ -168,12 +184,12 @@ function LoanDetail() {
                 </div>
 
                 {/* Tabs */}
-                <div className="flex space-x-1 rounded bg-gray-200 p-1 w-fit">
+                <div className="flex space-x-1 rounded bg-gray-200 p-1 w-fit max-w-full overflow-x-auto">
                     {['overview', 'schedule', 'transactions'].map((tab) => (
                         <button
                             key={tab}
                             onClick={() => setActiveTab(tab)}
-                            className={`px-6 py-2.5 text-sm font-medium rounded transition-all ${activeTab === tab
+                            className={`px-4 sm:px-6 py-2 sm:py-2.5 text-xs sm:text-sm font-medium rounded transition-all whitespace-nowrap ${activeTab === tab
                                 ? 'bg-white text-[#045e32] shadow'
                                 : 'text-gray-600 hover:bg-white/70'
                                 }`}
@@ -326,55 +342,105 @@ function LoanDetail() {
                                 </CardTitle>
                             </CardHeader>
                             <CardContent>
-                                <div className="flex justify-between mb-4">
-                                    <select value={monthFilter} onChange={(e) => setMonthFilter(e.target.value)} className="border rounded px-3 py-2 text-sm">
+                                <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 mb-4">
+                                    <select
+                                        value={monthFilter}
+                                        onChange={(e) => {
+                                            setMonthFilter(e.target.value);
+                                            setCurrentPage(1);
+                                        }}
+                                        className="border border-slate-200 rounded-lg px-3 py-2 text-xs sm:text-sm bg-white focus:outline-none focus:ring-1 focus:ring-[#045e32]"
+                                    >
                                         <option value="">All Months</option>
+                                        {availableMonths.map((m) => {
+                                            const [year, month] = m.split("-").map(Number);
+                                            const label = format(new Date(year, month - 1, 1), "MMMM yyyy");
+                                            return (
+                                                <option key={m} value={m}>
+                                                    {label}
+                                                </option>
+                                            );
+                                        })}
                                     </select>
+                                    <span className="text-xs text-muted-foreground">
+                                        {filteredTransactions.length} transaction{filteredTransactions.length !== 1 ? 's' : ''}
+                                    </span>
                                 </div>
 
-                                <Table>
-                                    <TableHeader>
-                                        <TableRow className="bg-gray-50">
-                                            <TableHead>Transaction Date</TableHead>
-                                            <TableHead>Type</TableHead>
-                                            <TableHead>Amount</TableHead>
-                                            <TableHead>Method</TableHead>
-                                            <TableHead>Status</TableHead>
-                                        </TableRow>
-                                    </TableHeader>
-                                    <TableBody>
-                                        {paginatedTransactions.map((t, i) => (
-                                            <TableRow key={i}>
-                                                <TableCell>{formatDate(t.date)}</TableCell>
-                                                <TableCell>
-                                                                                                        <Badge variant={t.type === 'Disbursement' ? "default" : "secondary"}>
-                                                        {t.type === 'Repayment' ? (t.repayment_type || 'Repayment') : t.type}
-                                                    </Badge>
-                                                </TableCell>
-                                                <TableCell className="font-semibold">{formatCurrency(t.amount)}</TableCell>
-                                                <TableCell>{t.payment_method || t.method || 'N/A'}</TableCell>
-                                                <TableCell>
-                                                    {t.status === "Reversed" ? (
-                                                        <Badge variant="destructive" className="bg-red-100 text-red-700 border-red-200">Reversed</Badge>
-                                                    ) : t.status === "Failed" ? (
-                                                        <Badge variant="destructive">Failed</Badge>
-                                                    ) : t.status === "Pending" ? (
-                                                        <Badge variant="secondary">Pending</Badge>
-                                                    ) : (
-                                                        <Badge variant="default" className="bg-green-100 text-green-700 hover:bg-green-100">Completed</Badge>
-                                                    )}
-                                                </TableCell>
+                                <div className="overflow-x-auto rounded-lg border">
+                                    <Table>
+                                        <TableHeader>
+                                            <TableRow className="bg-gray-50">
+                                                <TableHead>Transaction Date</TableHead>
+                                                <TableHead>Type</TableHead>
+                                                <TableHead>Amount</TableHead>
+                                                <TableHead>Method</TableHead>
+                                                <TableHead>Status</TableHead>
                                             </TableRow>
-                                        ))}
-                                        {paginatedTransactions.length === 0 && (
-                                            <TableRow>
-                                                <TableCell colSpan={5} className="text-center h-24 text-muted-foreground">
-                                                    No transactions found
-                                                </TableCell>
-                                            </TableRow>
-                                        )}
-                                    </TableBody>
-                                </Table>
+                                        </TableHeader>
+                                        <TableBody>
+                                            {paginatedTransactions.map((t, i) => (
+                                                <TableRow key={i}>
+                                                    <TableCell>{formatDate(t.date)}</TableCell>
+                                                    <TableCell>
+                                                        <Badge variant={t.type === 'Disbursement' ? "default" : "secondary"}>
+                                                            {t.type === 'Repayment' ? (t.repayment_type || 'Repayment') : t.type}
+                                                        </Badge>
+                                                    </TableCell>
+                                                    <TableCell className="font-semibold">{formatCurrency(t.amount)}</TableCell>
+                                                    <TableCell>{t.payment_method || t.method || 'N/A'}</TableCell>
+                                                    <TableCell>
+                                                        {t.status === "Reversed" ? (
+                                                            <Badge variant="destructive" className="bg-red-100 text-red-700 border-red-200">Reversed</Badge>
+                                                        ) : t.status === "Failed" ? (
+                                                            <Badge variant="destructive">Failed</Badge>
+                                                        ) : t.status === "Pending" ? (
+                                                            <Badge variant="secondary">Pending</Badge>
+                                                        ) : (
+                                                            <Badge variant="default" className="bg-green-100 text-green-700 hover:bg-green-100">Completed</Badge>
+                                                        )}
+                                                    </TableCell>
+                                                </TableRow>
+                                            ))}
+                                            {paginatedTransactions.length === 0 && (
+                                                <TableRow>
+                                                    <TableCell colSpan={5} className="text-center h-24 text-muted-foreground">
+                                                        No transactions found
+                                                    </TableCell>
+                                                </TableRow>
+                                            )}
+                                        </TableBody>
+                                    </Table>
+                                </div>
+
+                                {/* Pagination controls */}
+                                {totalPages > 1 && (
+                                    <div className="flex items-center justify-between mt-4 pt-4 border-t border-slate-100">
+                                        <span className="text-xs text-slate-500">
+                                            Showing page {currentPage} of {totalPages} ({filteredTransactions.length} total records)
+                                        </span>
+                                        <div className="flex items-center gap-2">
+                                            <Button
+                                                variant="outline"
+                                                size="sm"
+                                                onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
+                                                disabled={currentPage === 1}
+                                                className="h-8 text-xs"
+                                            >
+                                                Previous
+                                            </Button>
+                                            <Button
+                                                variant="outline"
+                                                size="sm"
+                                                onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
+                                                disabled={currentPage === totalPages}
+                                                className="h-8 text-xs"
+                                            >
+                                                Next
+                                            </Button>
+                                        </div>
+                                    </div>
+                                )}
                             </CardContent>
                         </Card>
                     )}

@@ -202,7 +202,7 @@ const GuarantorProfileSkeleton = () => (
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <div className="rounded border">
+          <div className="rounded border overflow-x-auto">
             <Table>
               <TableHeader>
                 <TableRow>

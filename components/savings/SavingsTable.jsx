@@ -84,7 +84,7 @@ function SavingsTable({ savings, isLoading, route = "member" }) {
       <CardContent>
         <div className="space-y-4">
           {/* Filter */}
-          <div className="flex items-center gap-4">
+          <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
             <Label
               htmlFor="account-type-filter"
               className="text-sm font-medium text-gray-700"
@@ -100,7 +100,7 @@ function SavingsTable({ savings, isLoading, route = "member" }) {
             >
               <SelectTrigger
                 id="account-type-filter"
-                className="w-[200px] border-gray-300 focus:ring-primary focus:border-primary"
+                className="w-full sm:w-[200px] border-gray-300 focus:ring-primary focus:border-primary"
                 aria-label="Filter by account type"
               >
                 <SelectValue placeholder="Select account type" />
@@ -116,7 +116,7 @@ function SavingsTable({ savings, isLoading, route = "member" }) {
           </div>
 
           {/* Table */}
-          <div className="bg-white shadow-sm border border-slate-100 rounded overflow-hidden">
+          <div className="bg-white shadow-sm border border-slate-100 rounded overflow-x-auto">
             <Table>
               <TableHeader>
                 <TableRow className="bg-[var(--primary)] hover:bg-[var(--primary-hover)]">
@@ -177,13 +177,13 @@ function SavingsTable({ savings, isLoading, route = "member" }) {
           </div>
 
           {/* Pagination */}
-          <div className="flex items-center justify-between mt-4">
+          <div className="flex flex-col sm:flex-row items-center justify-between gap-4 mt-4">
             <div className="text-sm text-gray-500">
               Showing {(currentPage - 1) * itemsPerPage + 1} to{" "}
               {Math.min(currentPage * itemsPerPage, totalItems)} of {totalItems}{" "}
               entries
             </div>
-            <div className="flex items-center gap-2">
+            <div className="flex flex-wrap items-center gap-2">
               <Button
                 onClick={() => handlePageChange(currentPage - 1)}
                 disabled={currentPage === 1}

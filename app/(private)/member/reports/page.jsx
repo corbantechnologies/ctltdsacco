@@ -122,7 +122,7 @@ const SaccoReportsSkeleton = () => (
   );
 
   return (
-    <div className="flex flex-col space-y-6 p-8">
+    <div className="flex flex-col space-y-6 p-4 sm:p-6 md:p-8">
       {/* Header */}
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
         <div>
@@ -205,47 +205,49 @@ const SaccoReportsSkeleton = () => (
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead>Month</TableHead>
-                <TableHead className="text-right">New Members</TableHead>
-                <TableHead className="text-right">Savings</TableHead>
-                <TableHead className="text-right">Loans Disbursed</TableHead>
-                <TableHead className="text-right">Repayments</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {summary?.monthly_summary?.map((month) => (
-                <TableRow key={month.month_num}>
-                  <TableCell className="font-medium">{month.month}</TableCell>
-                  <TableCell className="text-right">
-                    {month.new_members}
-                  </TableCell>
-                  <TableCell className="text-right">
-                    {formatCurrency(month.savings.total)}
-                  </TableCell>
-                  <TableCell className="text-right">
-                    {formatCurrency(month.loans.disbursed.total)}
-                  </TableCell>
-                  <TableCell className="text-right">
-                    {formatCurrency(month.loans.repaid.total)}
-                  </TableCell>
+          <div className="overflow-x-auto rounded-lg border">
+            <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableHead>Month</TableHead>
+                  <TableHead className="text-right">New Members</TableHead>
+                  <TableHead className="text-right">Savings</TableHead>
+                  <TableHead className="text-right">Loans Disbursed</TableHead>
+                  <TableHead className="text-right">Repayments</TableHead>
                 </TableRow>
-              ))}
-              {(!summary?.monthly_summary ||
-                summary.monthly_summary.length === 0) && (
-                  <TableRow>
-                    <TableCell
-                      colSpan={7}
-                      className="text-center h-24 text-muted-foreground"
-                    >
-                      No data available for this year
+              </TableHeader>
+              <TableBody>
+                {summary?.monthly_summary?.map((month) => (
+                  <TableRow key={month.month_num}>
+                    <TableCell className="font-medium">{month.month}</TableCell>
+                    <TableCell className="text-right">
+                      {month.new_members}
+                    </TableCell>
+                    <TableCell className="text-right">
+                      {formatCurrency(month.savings.total)}
+                    </TableCell>
+                    <TableCell className="text-right">
+                      {formatCurrency(month.loans.disbursed.total)}
+                    </TableCell>
+                    <TableCell className="text-right">
+                      {formatCurrency(month.loans.repaid.total)}
                     </TableCell>
                   </TableRow>
-                )}
-            </TableBody>
-          </Table>
+                ))}
+                {(!summary?.monthly_summary ||
+                  summary.monthly_summary.length === 0) && (
+                    <TableRow>
+                      <TableCell
+                        colSpan={5}
+                        className="text-center h-24 text-muted-foreground"
+                      >
+                        No data available for this year
+                      </TableCell>
+                    </TableRow>
+                  )}
+              </TableBody>
+            </Table>
+          </div>
         </CardContent>
       </Card>
 

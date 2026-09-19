@@ -44,11 +44,11 @@ export default function SaccoFinancialReports() {
             </div>
 
             <Tabs defaultValue="balance_sheet" className="w-full">
-                <TabsList className="grid w-full grid-cols-2 lg:grid-cols-4">
-                    <TabsTrigger value="balance_sheet">Balance Sheet</TabsTrigger>
-                    <TabsTrigger value="pnl">Profit & Loss</TabsTrigger>
-                    <TabsTrigger value="debtors">Debtors</TabsTrigger>
-                    <TabsTrigger value="cash_book">Cash Book</TabsTrigger>
+                <TabsList className="grid w-full grid-cols-2 lg:grid-cols-4 h-auto p-1 gap-1">
+                    <TabsTrigger value="balance_sheet" className="py-2 text-xs sm:text-sm">Balance Sheet</TabsTrigger>
+                    <TabsTrigger value="pnl" className="py-2 text-xs sm:text-sm">Profit & Loss</TabsTrigger>
+                    <TabsTrigger value="debtors" className="py-2 text-xs sm:text-sm">Debtors</TabsTrigger>
+                    <TabsTrigger value="cash_book" className="py-2 text-xs sm:text-sm">Cash Book</TabsTrigger>
                 </TabsList>
 
                 <div className="mt-4">

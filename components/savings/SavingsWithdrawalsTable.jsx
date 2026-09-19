@@ -340,13 +340,13 @@ function SavingsWithdrawalsTable({ withdrawals }) {
 
       {/* Pagination */}
       {totalPages > 1 && (
-        <div className="flex items-center justify-between p-4 border-t">
+        <div className="flex flex-col sm:flex-row items-center justify-between gap-4 p-4 border-t">
           <div className="text-sm text-gray-500">
             Showing {(currentPage - 1) * itemsPerPage + 1} to{" "}
             {Math.min(currentPage * itemsPerPage, totalItems)} of {totalItems}{" "}
             entries
           </div>
-          <div className="flex gap-2">
+          <div className="flex flex-wrap items-center gap-2">
             <Button
               onClick={() => handlePageChange(currentPage - 1)}
               disabled={currentPage === 1}

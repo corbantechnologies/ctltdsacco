@@ -373,7 +373,7 @@ function SavingsDetail() {
         </div>
 
         {/* Tab Navigation Controls */}
-        <div className="flex border-b border-slate-200 gap-6">
+        <div className="flex border-b border-slate-200 gap-4 sm:gap-6 overflow-x-auto max-w-full whitespace-nowrap">
           <button
             onClick={() => setActiveTab("overview")}
             className={`pb-3 text-sm font-semibold transition-all relative ${
@@ -469,21 +469,27 @@ function SavingsDetail() {
 
                 <div className="flex flex-wrap items-center gap-3">
                   {/* Search bar */}
-                  <div className="relative">
+                  <div className="relative w-full sm:w-auto">
                     <Search className="h-4 w-4 absolute left-3 top-2.5 text-slate-400" />
                     <input
                       type="text"
                       placeholder="Search transactions..."
                       value={searchTerm}
-                      onChange={(e) => setSearchTerm(e.target.value)}
-                      className="pl-9 pr-3 py-1.5 border border-slate-200 rounded-lg text-xs bg-white focus:outline-none focus:ring-1 focus:ring-emerald-600 w-44"
+                      onChange={(e) => {
+                        setSearchTerm(e.target.value);
+                        setCurrentPage(1);
+                      }}
+                      className="pl-9 pr-3 py-1.5 border border-slate-200 rounded-lg text-xs bg-white focus:outline-none focus:ring-1 focus:ring-emerald-600 w-full sm:w-44"
                     />
                   </div>
 
                   {/* Type Filter */}
                   <select
                     value={typeFilter}
-                    onChange={(e) => setTypeFilter(e.target.value)}
+                    onChange={(e) => {
+                      setTypeFilter(e.target.value);
+                      setCurrentPage(1);
+                    }}
                     className="border border-slate-200 rounded-lg px-3 py-1.5 text-xs bg-white focus:outline-none focus:ring-1 focus:ring-emerald-600 font-medium"
                   >
                     <option value="ALL">All Types</option>
@@ -578,7 +584,7 @@ function SavingsDetail() {
 
               {/* Pagination controls */}
               {totalPages > 1 && (
-                <div className="flex items-center justify-between p-4 border-t border-slate-100">
+                <div className="flex flex-col sm:flex-row items-center justify-between gap-4 p-4 border-t border-slate-100">
                   <span className="text-xs text-slate-500">
                     Showing page {currentPage} of {totalPages} ({totalItems} total records)
                   </span>

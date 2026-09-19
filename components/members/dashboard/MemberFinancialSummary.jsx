@@ -250,7 +250,7 @@ function SummaryTabContent({ data, type, emptyMessage }) {
       )}
 
       {/* Totals Summary Cards */}
-      <div className={`grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-${type === 'savings' ? 4 : 5} gap-4`}>
+      <div className={`grid grid-cols-1 sm:grid-cols-2 ${type === 'savings' ? 'lg:grid-cols-4' : 'lg:grid-cols-5'} gap-4`}>
         {type === "savings" && (() => {
           const openingBalance = selectedAccount.monthly_summary?.[0]?.opening_balance || 0;
           const closingBalance = selectedAccount.monthly_summary?.[11]?.closing_balance || 0;

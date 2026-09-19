@@ -31,7 +31,7 @@ export default function CashBook() {
                     <CardTitle>Cash Book</CardTitle>
                     <CardDescription>As of {new Date(as_of).toLocaleDateString()}</CardDescription>
                 </div>
-                <div className="flex items-center gap-2">
+                <div className="flex flex-wrap items-center gap-2">
                     <Label htmlFor="asOfDate" className="whitespace-nowrap text-sm text-muted-foreground">As Of Date:</Label>
                     <Input
                         type="date"
@@ -49,26 +49,28 @@ export default function CashBook() {
                     <p className="text-2xl font-bold text-primary">{formatCurrency(total_cash)}</p>
                 </div>
 
-                <Table>
-                    <TableHeader>
-                        <TableRow>
-                            <TableHead>Account</TableHead>
-                            <TableHead>Code</TableHead>
-                            <TableHead>Category</TableHead>
-                            <TableHead className="text-right">Balance</TableHead>
-                        </TableRow>
-                    </TableHeader>
-                    <TableBody>
-                        {accounts.map((acc) => (
-                            <TableRow key={acc.id}>
-                                <TableCell>{acc.name}</TableCell>
-                                <TableCell className="font-mono">{acc.code}</TableCell>
-                                <TableCell>{acc.category}</TableCell>
-                                <TableCell className="text-right font-medium">{formatCurrency(Math.abs(acc.balance))}</TableCell>
+                <div className="overflow-x-auto rounded-lg border">
+                    <Table>
+                        <TableHeader>
+                            <TableRow>
+                                <TableHead>Account</TableHead>
+                                <TableHead>Code</TableHead>
+                                <TableHead>Category</TableHead>
+                                <TableHead className="text-right">Balance</TableHead>
                             </TableRow>
-                        ))}
-                    </TableBody>
-                </Table>
+                        </TableHeader>
+                        <TableBody>
+                            {accounts.map((acc) => (
+                                <TableRow key={acc.id}>
+                                    <TableCell>{acc.name}</TableCell>
+                                    <TableCell className="font-mono">{acc.code}</TableCell>
+                                    <TableCell>{acc.category}</TableCell>
+                                    <TableCell className="text-right font-medium">{formatCurrency(Math.abs(acc.balance))}</TableCell>
+                                </TableRow>
+                            ))}
+                        </TableBody>
+                    </Table>
+                </div>
 
                 {note && <p className="text-xs text-muted-foreground mt-4 italic">{note}</p>}
             </CardContent>

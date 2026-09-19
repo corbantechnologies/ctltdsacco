@@ -34,7 +34,7 @@ export default function PnLReport() {
                         {new Date(period.start).toLocaleDateString()} — {new Date(period.end).toLocaleDateString()}
                     </CardDescription>
                 </div>
-                <div className="flex flex-col sm:flex-row items-center gap-4">
+                <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
                     <div className="flex items-center gap-2">
                         <Label htmlFor="startDate" className="whitespace-nowrap text-sm text-muted-foreground">Start Date:</Label>
                         <Input
@@ -59,46 +59,48 @@ export default function PnLReport() {
                 </div>
             </CardHeader>
             <CardContent>
-                <Table>
-                    <TableHeader>
-                        <TableRow><TableHead>Item</TableHead><TableHead className="text-right">Amount</TableHead></TableRow>
-                    </TableHeader>
-                    <TableBody>
-                        {/* Revenue */}
-                        <TableRow className="bg-muted/30"><TableCell colSpan={2} className="font-semibold text-green-700">Revenue</TableCell></TableRow>
-                        {revenue.accounts.map((acc) => (
-                            <TableRow key={acc.id}>
-                                <TableCell>{acc.name} ({acc.code})</TableCell>
-                                <TableCell className="text-right">{formatCurrency(acc.balance)}</TableCell>
+                <div className="overflow-x-auto rounded-lg border">
+                    <Table>
+                        <TableHeader>
+                            <TableRow><TableHead>Item</TableHead><TableHead className="text-right">Amount</TableHead></TableRow>
+                        </TableHeader>
+                        <TableBody>
+                            {/* Revenue */}
+                            <TableRow className="bg-muted/30"><TableCell colSpan={2} className="font-semibold text-green-700">Revenue</TableCell></TableRow>
+                            {revenue.accounts.map((acc) => (
+                                <TableRow key={acc.id}>
+                                    <TableCell>{acc.name} ({acc.code})</TableCell>
+                                    <TableCell className="text-right">{formatCurrency(acc.balance)}</TableCell>
+                                </TableRow>
+                            ))}
+                            <TableRow className="font-bold bg-muted/70">
+                                <TableCell>Total Revenue</TableCell>
+                                <TableCell className="text-right">{formatCurrency(revenue.total)}</TableCell>
                             </TableRow>
-                        ))}
-                        <TableRow className="font-bold bg-muted/70">
-                            <TableCell>Total Revenue</TableCell>
-                            <TableCell className="text-right">{formatCurrency(revenue.total)}</TableCell>
-                        </TableRow>
 
-                        {/* Expenses */}
-                        <TableRow className="bg-muted/30"><TableCell colSpan={2} className="font-semibold text-red-700 pt-6">Expenses</TableCell></TableRow>
-                        {expenses.accounts.map((acc) => (
-                            <TableRow key={acc.id}>
-                                <TableCell>{acc.name} ({acc.code})</TableCell>
-                                <TableCell className="text-right">{formatCurrency(acc.balance)}</TableCell>
+                            {/* Expenses */}
+                            <TableRow className="bg-muted/30"><TableCell colSpan={2} className="font-semibold text-red-700 pt-6">Expenses</TableCell></TableRow>
+                            {expenses.accounts.map((acc) => (
+                                <TableRow key={acc.id}>
+                                    <TableCell>{acc.name} ({acc.code})</TableCell>
+                                    <TableCell className="text-right">{formatCurrency(acc.balance)}</TableCell>
+                                </TableRow>
+                            ))}
+                            <TableRow className="font-bold bg-muted/70">
+                                <TableCell>Total Expenses</TableCell>
+                                <TableCell className="text-right">{formatCurrency(expenses.total)}</TableCell>
                             </TableRow>
-                        ))}
-                        <TableRow className="font-bold bg-muted/70">
-                            <TableCell>Total Expenses</TableCell>
-                            <TableCell className="text-right">{formatCurrency(expenses.total)}</TableCell>
-                        </TableRow>
 
-                        {/* Net Income */}
-                        <TableRow className="bg-primary/5 border-t-2 border-primary">
-                            <TableCell className="font-bold text-lg">Net Income / (Loss)</TableCell>
-                            <TableCell className={`text-right font-bold text-lg ${net_income >= 0 ? "text-green-600" : "text-red-600"}`}>
-                                {formatCurrency(net_income)}
-                            </TableCell>
-                        </TableRow>
-                    </TableBody>
-                </Table>
+                            {/* Net Income */}
+                            <TableRow className="bg-primary/5 border-t-2 border-primary">
+                                <TableCell className="font-bold text-lg">Net Income / (Loss)</TableCell>
+                                <TableCell className={`text-right font-bold text-lg ${net_income >= 0 ? "text-green-600" : "text-red-600"}`}>
+                                    {formatCurrency(net_income)}
+                                </TableCell>
+                            </TableRow>
+                        </TableBody>
+                    </Table>
+                </div>
             </CardContent>
         </Card>
     );

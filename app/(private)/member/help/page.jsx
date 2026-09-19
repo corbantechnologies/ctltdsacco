@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import Link from "next/link";
 import { 
     HelpCircle, 
     ArrowRight, 
@@ -21,10 +22,10 @@ export default function MemberHelpCenter() {
     const primaryColor = "var(--primary)";
 
     const quickLinks = [
-        { title: "Getting Started", icon: Rocket, desc: "New here? Learn the basics of your portal." },
-        { title: "Savings Guide", icon: PiggyBank, desc: "How to manage your deposits and interest." },
-        { title: "Loan Application", icon: HandCoins, desc: "Step-by-step guide to applying for credit." },
-        { title: "Statements", icon: FileText, desc: "How to download your financial reports." }
+        { title: "Getting Started", icon: Rocket, desc: "New here? Learn the basics of your portal.", href: "/member/dashboard" },
+        { title: "Savings Guide", icon: PiggyBank, desc: "How to manage your deposits and interest.", href: "/member/savings" },
+        { title: "Loan Application", icon: HandCoins, desc: "Step-by-step guide to applying for credit.", href: "/member/loan-applications" },
+        { title: "Statements", icon: FileText, desc: "How to download your financial reports.", href: "/member/reports" }
     ];
 
     const faqs = [
@@ -51,7 +52,7 @@ export default function MemberHelpCenter() {
     ];
 
     return (
-        <div className="min-h-screen bg-slate-50/50 p-4 md:p-8 space-y-8 mx-auto">
+        <div className="min-h-screen bg-slate-50/50 p-4 sm:p-6 md:p-8 space-y-8 mx-auto">
             {/* Hero Section */}
             <div className="text-center space-y-4 py-8">
                 <div className="inline-flex items-center gap-2 px-3 py-1 rounded bg-[var(--primary)]/10 text-[var(--primary)] text-xs font-semibold uppercase tracking-wider">
@@ -69,17 +70,22 @@ export default function MemberHelpCenter() {
             {/* Quick Link Cards */}
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
                 {quickLinks.map((link, idx) => (
-                    <Card key={idx} className="hover:border-[var(--primary)] transition-all hover:shadow-md cursor-pointer group">
-                        <CardHeader className="space-y-4">
-                            <div className="w-10 h-10 rounded bg-slate-100 flex items-center justify-center text-[var(--primary)] group-hover:bg-[var(--primary)] group-hover:text-white transition-colors">
-                                <link.icon className="w-6 h-6" />
-                            </div>
-                            <div>
-                                <CardTitle className="text-lg">{link.title}</CardTitle>
-                                <CardDescription className="text-xs leading-relaxed">{link.desc}</CardDescription>
-                            </div>
-                        </CardHeader>
-                    </Card>
+                    <Link key={idx} href={link.href} className="block group">
+                        <Card className="hover:border-[var(--primary)] transition-all hover:shadow-md cursor-pointer h-full">
+                            <CardHeader className="space-y-4">
+                                <div className="w-10 h-10 rounded bg-slate-100 flex items-center justify-center text-[var(--primary)] group-hover:bg-[var(--primary)] group-hover:text-white transition-colors">
+                                    <link.icon className="w-6 h-6" />
+                                </div>
+                                <div>
+                                    <CardTitle className="text-lg flex items-center justify-between">
+                                        <span>{link.title}</span>
+                                        <ArrowRight className="w-4 h-4 opacity-0 group-hover:opacity-100 transition-opacity text-[var(--primary)]" />
+                                    </CardTitle>
+                                    <CardDescription className="text-xs leading-relaxed mt-1">{link.desc}</CardDescription>
+                                </div>
+                            </CardHeader>
+                        </Card>
+                    </Link>
                 ))}
             </div>
 

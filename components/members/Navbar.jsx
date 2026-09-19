@@ -59,7 +59,6 @@ const MENU_LINKS = [
   { label: "My Loans", href: "/member/loans", icon: CreditCard },
   { label: "Loan Applications", href: "/member/loan-applications", icon: FileText },
   { label: "Guarantor Profile", href: "/member/guarantorprofile", icon: ShieldCheck },
-  { label: "Reports & Statements", href: "/member/reports", icon: TrendingUp },
   { label: "Profile Settings", href: "/member/settings", icon: Settings },
   { label: "Help Center", href: "/member/help", icon: HelpCircle },
 ];
@@ -69,6 +68,10 @@ function MemberNavbar() {
   const pathname = usePathname();
   const { isCollapsed, toggle } = useMemberSidebar();
   const { data: session } = useSession();
+
+  useEffect(() => {
+    setIsMobileOpen(false);
+  }, [pathname]);
 
   const sidebarContent = (setIsMenuOpen) => (
     <div className="h-full flex flex-col bg-slate-900 text-slate-100 border-r border-slate-800 select-none">

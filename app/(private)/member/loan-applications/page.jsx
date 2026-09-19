@@ -137,7 +137,7 @@ export default function LoanApplications() {
                     </Button>
                   </div>
                 ) : (
-                  <div className="rounded border">
+                  <div className="rounded border overflow-x-auto">
                     <Table>
                       <TableHeader>
                         <TableRow className="bg-gray-50">
@@ -223,6 +223,7 @@ export default function LoanApplications() {
               <CreateLoanApplication
                 onSuccess={() => {
                   setIsCreateModalOpen(false);
+                  refetch();
                 }}
                 memberPath="member"
               />

@@ -92,6 +92,14 @@ function MemberDashboard() {
   const availableGuarantorAmount =
     member?.guarantor_profile?.available_amount || 0;
 
+  const primaryLoan =
+    member?.loan_accounts?.find(
+      (l) => l.status === "Active" || l.status === "Funded",
+    ) || member?.loan_accounts?.[0];
+  const primaryLoanHref = primaryLoan
+    ? `/member/loans/${primaryLoan.reference || primaryLoan.account_number}`
+    : "/member/loans";
+
   return (
     <div className="min-h-screen bg-gray-50/50 p-4 md:p-8 space-y-8">
       {/* Header Section */}
@@ -133,7 +141,7 @@ function MemberDashboard() {
           </div>
         </Link>
 
-        <Link href="/member/loans" className="group">
+        <Link href={primaryLoanHref} className="group">
           <div className="flex items-center gap-3 p-3.5 bg-white border border-slate-100 rounded-xl shadow-xs hover:border-orange-500 hover:shadow-sm transition-all">
             <div className="p-2.5 rounded-lg bg-orange-50 text-orange-600 group-hover:bg-orange-600 group-hover:text-white transition-colors">
               <CreditCard className="w-5 h-5" />
@@ -275,7 +283,7 @@ function MemberDashboard() {
               <TrendingUp className="h-5 w-5 text-orange-600" />
               Active Loans
             </CardTitle>
-            <Link href="/member/loans" className="text-xs text-orange-600 hover:underline flex items-center gap-1 font-semibold">
+            <Link href={primaryLoanHref} className="text-xs text-orange-600 hover:underline flex items-center gap-1 font-semibold">
               View All <ChevronRight className="w-3.5 h-3.5" />
             </Link>
           </CardHeader>

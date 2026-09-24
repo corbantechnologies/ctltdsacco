@@ -210,8 +210,15 @@ function LoanDetail() {
                                     <CardContent><p className="text-xl font-semibold text-[var(--accent)]">{formatCurrency(loan.outstanding_balance)}</p></CardContent>
                                 </Card>
                                 <Card className="border-l-4 border-l-green-600">
-                                    <CardHeader className="pb-2"><CardTitle className="text-xs uppercase tracking-wider text-slate-500">Principal</CardTitle></CardHeader>
-                                    <CardContent><p className="text-xl font-semibold">{formatCurrency(loan.principal)}</p></CardContent>
+                                    <CardHeader className="pb-2"><CardTitle className="text-xs uppercase tracking-wider text-slate-500">Outstanding Principal</CardTitle></CardHeader>
+                                    <CardContent>
+                                        <p className="text-xl font-semibold text-green-700">
+                                            {formatCurrency(loan.outstanding_principal ?? (parseFloat(loan.principal || 0) - parseFloat(loan.total_principal_paid || 0)))}
+                                        </p>
+                                        <p className="text-[11px] text-muted-foreground mt-0.5">
+                                            Original: {formatCurrency(loan.principal)}
+                                        </p>
+                                    </CardContent>
                                 </Card>
                                 <Card className="border-l-4 border-l-amber-500">
                                     <CardHeader className="pb-2"><CardTitle className="text-xs uppercase tracking-wider text-slate-500">Interest Accrued</CardTitle></CardHeader>

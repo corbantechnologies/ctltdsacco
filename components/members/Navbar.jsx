@@ -21,6 +21,7 @@ import {
   User,
   CreditCard,
   TrendingUp,
+  ArrowDownCircle,
 } from "lucide-react";
 
 // ─── Sidebar Context ──────────────────────────────────────────────────────────
@@ -56,6 +57,9 @@ export function MemberSidebarProvider({ children }) {
 const MENU_LINKS = [
   { label: "Dashboard", href: "/member/dashboard", icon: LayoutDashboard },
   { label: "My Savings", href: "/member/savings", icon: PiggyBank },
+  ...(SACCO_CONFIG.enableWithdrawals
+    ? [{ label: "Withdrawals", href: "/member/withdrawals", icon: ArrowDownCircle }]
+    : []),
   { label: "My Loans", href: "/member/loans", icon: CreditCard },
   { label: "Loan Applications", href: "/member/loan-applications", icon: FileText },
   { label: "Guarantor Profile", href: "/member/guarantorprofile", icon: ShieldCheck },

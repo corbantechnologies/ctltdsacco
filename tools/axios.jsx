@@ -34,7 +34,16 @@ function handleExpiredSession(error) {
   return Promise.reject(error);
 }
 
+// SACCO admins are members too. Every request from this portal asks the API
+// for the signed-in person's own records only, so an admin who logs in here
+// sees their own loans and savings, never every member's.
+function asMemberPortal(config) {
+  config.params = { ...(config.params || {}), portal: "member" };
+  return config;
+}
+
 function withSessionHandling(instance) {
+  instance.interceptors.request.use(asMemberPortal);
   instance.interceptors.response.use((response) => response, handleExpiredSession);
   return instance;
 }

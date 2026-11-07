@@ -131,7 +131,7 @@ export default function LoanApplications() {
                     <Button
                       variant="link"
                       onClick={() => setIsCreateModalOpen(true)}
-                      className="text-[#045e32] mt-2"
+                      className="text-[var(--primary)] mt-2"
                     >
                       Start your first application
                     </Button>
@@ -177,7 +177,7 @@ export default function LoanApplications() {
                                 asChild
                                 variant="ghost"
                                 size="sm"
-                                className="text-[#045e32] hover:text-[#045e32] hover:bg-green-50"
+                                className="text-[var(--primary)] hover:text-[var(--primary)] hover:bg-green-50"
                               >
                                 <Link
                                   href={`/member/loan-applications/${app.reference}`}

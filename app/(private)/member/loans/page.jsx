@@ -149,7 +149,7 @@ function LoansPage() {
                                     <span className="font-semibold text-slate-900">{formatCurrency(totalBalance)}</span>
                                 </p>
                             </div>
-                            <Button asChild className="bg-[#045e32] hover:bg-[#034625] text-white w-full sm:w-auto">
+                            <Button asChild className="bg-[var(--primary)] hover:bg-[var(--primary-hover)] text-white w-full sm:w-auto">
                                 <Link href="/member/loan-applications" className="flex items-center justify-center gap-2">
                                     <PlusCircle className="h-4 w-4" /> Apply for Loan
                                 </Link>
@@ -173,7 +173,7 @@ function LoansPage() {
                             </p>
                         </div>
                         <div className="pt-2 flex flex-col sm:flex-row justify-center gap-3">
-                            <Button asChild className="bg-[#045e32] hover:bg-[#034625] text-white">
+                            <Button asChild className="bg-[var(--primary)] hover:bg-[var(--primary-hover)] text-white">
                                 <Link href="/member/loan-applications" className="flex items-center justify-center gap-2">
                                     <PlusCircle className="h-4 w-4" /> Apply for Loan
                                 </Link>

@@ -7,7 +7,7 @@ const SavingTypesCountCard = ({ count }) => (
     <Flex direction="column" gap="2">
       <Flex align="center" gap="2">
         <Wallet className="h-6 w-6 " />
-        <Text size="5" weight="bold" style={{ color: '#ea1315' }}>
+        <Text size="5" weight="bold" style={{ color: 'var(--accent)' }}>
           Savings Types
         </Text>
       </Flex>

@@ -166,7 +166,7 @@ function LoanDetail() {
                             <h1 className="text-xl font-semibold text-gray-900">{loan.product} Loan</h1>
                             <Badge
                                 variant={loan.status === 'Active' ? 'default' : 'secondary'}
-                                className={loan.status === 'Active' ? 'bg-[#045e32] text-white' : ''}
+                                className={loan.status === 'Active' ? 'bg-[var(--primary)] text-white' : ''}
                             >
                                 {loan.status}
                             </Badge>
@@ -176,7 +176,7 @@ function LoanDetail() {
 
                     {SACCO_CONFIG.enableMpesa && (
                         <Button
-                            className="bg-[#045e32] hover:bg-[#034625]"
+                            className="bg-[var(--primary)] hover:bg-[var(--primary-hover)]"
                             onClick={() => setIsMpesaModalOpen(true)}
                         >
                             Make Repayment
@@ -191,7 +191,7 @@ function LoanDetail() {
                             key={tab}
                             onClick={() => setActiveTab(tab)}
                             className={`px-4 sm:px-6 py-2 sm:py-2.5 text-xs sm:text-sm font-medium rounded transition-all whitespace-nowrap ${activeTab === tab
-                                ? 'bg-white text-[#045e32] shadow'
+                                ? 'bg-white text-[var(--primary)] shadow'
                                 : 'text-gray-600 hover:bg-white/70'
                                 }`}
                         >
@@ -279,7 +279,7 @@ function LoanDetail() {
                                     {/* Total Loan Amount */}
                                     <div className="p-4 sm:p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-3 hover:bg-slate-50/40 transition-colors">
                                         <div className="flex items-center gap-3.5">
-                                            <div className="p-2.5 rounded-xl bg-emerald-50 text-[#045e32] shrink-0">
+                                            <div className="p-2.5 rounded-xl bg-emerald-50 text-[var(--primary)] shrink-0">
                                                 <History className="h-5 w-5" />
                                             </div>
                                             <div>
@@ -288,7 +288,7 @@ function LoanDetail() {
                                             </div>
                                         </div>
                                         <div className="text-left sm:text-right pl-12 sm:pl-0">
-                                            <p className="text-xl sm:text-2xl font-bold text-[#045e32]">{formatCurrency(loan.total_loan_amount)}</p>
+                                            <p className="text-xl sm:text-2xl font-bold text-[var(--primary)]">{formatCurrency(loan.total_loan_amount)}</p>
                                             <p className="text-[11px] text-muted-foreground">Total loan commitment</p>
                                         </div>
                                     </div>
@@ -398,7 +398,7 @@ function LoanDetail() {
                                                 <TableCell>{formatCurrency(item.principal_due)}</TableCell>
                                                 <TableCell>{formatCurrency(item.interest_due)}</TableCell>
                                                 
-                                                <TableCell className="font-semibold text-[#045e32]">{formatCurrency(item.total_due)}</TableCell>
+                                                <TableCell className="font-semibold text-[var(--primary)]">{formatCurrency(item.total_due)}</TableCell>
                                                 <TableCell>{formatCurrency(item.principal_paid || 0)}</TableCell>
                                                 <TableCell>{formatCurrency(item.interest_paid || 0)}</TableCell>
                                                 <TableCell className="font-medium">{formatCurrency(item.amount_paid || 0)}</TableCell>
@@ -432,7 +432,7 @@ function LoanDetail() {
                                             setMonthFilter(e.target.value);
                                             setCurrentPage(1);
                                         }}
-                                        className="border border-slate-200 rounded-lg px-3 py-2 text-xs sm:text-sm bg-white focus:outline-none focus:ring-1 focus:ring-[#045e32]"
+                                        className="border border-slate-200 rounded-lg px-3 py-2 text-xs sm:text-sm bg-white focus:outline-none focus:ring-1 focus:ring-[var(--primary)]"
                                     >
                                         <option value="">All Months</option>
                                         {availableMonths.map((m) => {

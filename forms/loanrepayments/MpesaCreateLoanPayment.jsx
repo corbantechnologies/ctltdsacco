@@ -81,7 +81,7 @@ export default function MpesaCreateLoanPaymentForm({
             <DialogContent className="sm:max-w-[480px] max-h-[90vh] overflow-y-auto">
                 <DialogHeader>
                     <DialogTitle className="flex items-center gap-2">
-                        <CreditCard className="h-5 w-5 text-[#045e32]" />
+                        <CreditCard className="h-5 w-5 text-[var(--primary)]" />
                         M-Pesa Loan Repayment
                     </DialogTitle>
                     <DialogDescription>
@@ -151,7 +151,7 @@ export default function MpesaCreateLoanPaymentForm({
                                                 }}
                                                 className={`text-left p-3 rounded-lg border transition-all ${
                                                     selectedType.value === type.value
-                                                        ? "border-[#045e32] bg-[#045e32]/5 ring-1 ring-[#045e32]"
+                                                        ? "border-[var(--primary)] bg-[var(--primary)]/5 ring-1 ring-[var(--primary)]"
                                                         : isUnavailable
                                                         ? "border-gray-200 bg-gray-50 opacity-50 cursor-not-allowed"
                                                         : "border-gray-200 hover:border-gray-400 hover:bg-gray-50"
@@ -161,7 +161,7 @@ export default function MpesaCreateLoanPaymentForm({
                                                     <div>
                                                         <p className={`text-sm font-medium ${
                                                             selectedType.value === type.value
-                                                                ? "text-[#045e32]"
+                                                                ? "text-[var(--primary)]"
                                                                 : "text-gray-800"
                                                         }`}>
                                                             {type.label}
@@ -171,7 +171,7 @@ export default function MpesaCreateLoanPaymentForm({
                                                         </p>
                                                     </div>
                                                     {autoAmount && (
-                                                        <span className="text-xs font-mono font-semibold text-[#045e32] ml-2 shrink-0">
+                                                        <span className="text-xs font-mono font-semibold text-[var(--primary)] ml-2 shrink-0">
                                                             KES {parseFloat(autoAmount).toLocaleString("en-KE", { minimumFractionDigits: 2 })}
                                                         </span>
                                                     )}
@@ -234,7 +234,7 @@ export default function MpesaCreateLoanPaymentForm({
                             <Button
                                 type="submit"
                                 disabled={loading}
-                                className="w-full bg-[#045e32] hover:bg-[#034625] h-11"
+                                className="w-full bg-[var(--primary)] hover:bg-[var(--primary-hover)] h-11"
                             >
                                 {loading ? (
                                     <>

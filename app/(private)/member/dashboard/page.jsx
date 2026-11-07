@@ -283,7 +283,7 @@ function MemberDashboard() {
               <TrendingUp className="h-5 w-5 text-orange-600" />
               Active Loans
             </CardTitle>
-            <Link href={primaryLoanHref} className="text-xs text-orange-600 hover:underline flex items-center gap-1 font-semibold">
+            <Link href="/member/loans" className="text-xs text-orange-600 hover:underline flex items-center gap-1 font-semibold">
               View All <ChevronRight className="w-3.5 h-3.5" />
             </Link>
           </CardHeader>

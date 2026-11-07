@@ -25,7 +25,7 @@ export default function MemberHelpCenter() {
         { title: "Getting Started", icon: Rocket, desc: "New here? Learn the basics of your portal.", href: "/member/dashboard" },
         { title: "Savings Guide", icon: PiggyBank, desc: "How to manage your deposits and interest.", href: "/member/savings" },
         { title: "Loan Application", icon: HandCoins, desc: "Step-by-step guide to applying for credit.", href: "/member/loan-applications" },
-        { title: "Statements", icon: FileText, desc: "How to download your financial reports.", href: "/member/reports" }
+        { title: "Statements", icon: FileText, desc: "Your yearly statement is on your dashboard.", href: "/member/dashboard" }
     ];
 
     const faqs = [

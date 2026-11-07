@@ -5,6 +5,7 @@ import { format, startOfMonth, endOfMonth, isWithinInterval } from "date-fns";
 import { useParams } from "next/navigation";
 import { useFetchSavingDetail } from "@/hooks/savings/actions";
 import { useFetchMember } from "@/hooks/members/actions";
+import { useFetchSavingsWithdrawals } from "@/hooks/savingswithdrawals/actions";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -48,6 +49,7 @@ import {
 import jsPDF from "jspdf";
 import autoTable from "jspdf-autotable";
 import MpesaCreateDepositForm from "@/forms/savingsdeposits/MpesaCreateDepositForm";
+import CreateWithdrawal from "@/forms/savingswithdrawals/CreateWithdrawal";
 import toast from "react-hot-toast";
 import { SACCO_CONFIG } from "@/lib/sacco-config";
 
@@ -73,6 +75,7 @@ function SavingsDetail() {
   const [copied, setCopied] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [depositModalOpen, setDepositModalOpen] = useState(false);
+  const [withdrawModalOpen, setWithdrawModalOpen] = useState(false);
   const itemsPerPage = 20;
 
   const {
@@ -86,6 +89,18 @@ function SavingsDetail() {
     data: member,
   } = useFetchMember();
 
+  // The savings detail does not include withdrawals, so read the member's own
+  // withdrawal requests and keep the ones for this account.
+  const { data: allWithdrawals, refetch: refetchWithdrawals } =
+    useFetchSavingsWithdrawals(SACCO_CONFIG.enableWithdrawals);
+  const accountWithdrawals = useMemo(() => {
+    if (!saving) return [];
+    const own = (allWithdrawals || []).filter(
+      (w) => w.savings_account === saving.account_number
+    );
+    return own.length ? own : saving.withdrawals || [];
+  }, [allWithdrawals, saving]);
+
   // --- Computed Transactions & Stat Metrics ---
   const allTransactions = useMemo(() => {
     if (!saving) return [];
@@ -96,7 +111,7 @@ function SavingsDetail() {
       status: deposit.transaction_status || "Completed",
       date: deposit.transaction_date || deposit.created_at,
     }));
-    const withdrawals = (saving.withdrawals || []).map((withdrawal) => ({
+    const withdrawals = accountWithdrawals.map((withdrawal) => ({
       ...withdrawal,
       type: "Withdrawal",
       method: withdrawal.payment_method || "N/A",
@@ -106,14 +121,16 @@ function SavingsDetail() {
     return [...deposits, ...withdrawals].sort(
       (a, b) => new Date(b.date) - new Date(a.date)
     );
-  }, [saving]);
+  }, [saving, accountWithdrawals]);
 
   const stats = useMemo(() => {
     const totalDeposits = (saving?.deposits || []).reduce(
       (sum, d) => sum + (parseFloat(d.amount) || 0),
       0
     );
-    const totalWithdrawals = (saving?.withdrawals || []).reduce(
+    const totalWithdrawals = accountWithdrawals
+      .filter((w) => !w.transaction_status || w.transaction_status === "Completed")
+      .reduce(
       (sum, w) => sum + (parseFloat(w.amount) || 0),
       0
     );
@@ -121,7 +138,7 @@ function SavingsDetail() {
       totalDeposits,
       totalWithdrawals,
     };
-  }, [saving]);
+  }, [saving, accountWithdrawals]);
 
   const filteredTransactions = useMemo(() => {
     return allTransactions.filter((t) => {
@@ -301,14 +318,24 @@ function SavingsDetail() {
             </div>
           </div>
 
-          {SACCO_CONFIG.enableMpesa && (
-            <div className="flex items-center gap-3 w-full md:w-auto justify-stretch sm:justify-end">
-              <Button
-                className="bg-emerald-500 hover:bg-emerald-600 text-white font-semibold px-6 shadow-lg shadow-emerald-950/40 w-full sm:w-auto h-11 text-sm"
-                onClick={() => setDepositModalOpen(true)}
-              >
-                <ArrowDownLeft className="h-4 w-4 mr-2" /> Make Deposit
-              </Button>
+          {(SACCO_CONFIG.enableMpesa || SACCO_CONFIG.enableWithdrawals) && (
+            <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 w-full md:w-auto sm:justify-end">
+              {SACCO_CONFIG.enableMpesa && (
+                <Button
+                  className="bg-emerald-500 hover:bg-emerald-600 text-white font-semibold px-6 shadow-lg shadow-emerald-950/40 w-full sm:w-auto h-11 text-sm"
+                  onClick={() => setDepositModalOpen(true)}
+                >
+                  <ArrowDownLeft className="h-4 w-4 mr-2" /> Make Deposit
+                </Button>
+              )}
+              {SACCO_CONFIG.enableWithdrawals && saving.is_active && (
+                <Button
+                  className="bg-white/10 hover:bg-white/20 text-white border border-white/30 font-semibold px-6 w-full sm:w-auto h-11 text-sm"
+                  onClick={() => setWithdrawModalOpen(true)}
+                >
+                  <ArrowUpRight className="h-4 w-4 mr-2" /> Withdraw
+                </Button>
+              )}
             </div>
           )}
         </div>
@@ -624,6 +651,18 @@ function SavingsDetail() {
         }}
         savings_account={saving}
       />
+
+      {SACCO_CONFIG.enableWithdrawals && (
+        <CreateWithdrawal
+          isOpen={withdrawModalOpen}
+          onClose={() => setWithdrawModalOpen(false)}
+          account={saving}
+          refetchAccount={() => {
+            refetchSaving();
+            refetchWithdrawals();
+          }}
+        />
+      )}
     </div>
   );
 }

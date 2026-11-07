@@ -17,12 +17,15 @@ import {
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Button } from "@/components/ui/button";
+import { SACCO_CONFIG } from "@/lib/sacco-config";
+import GuideView from "@/components/guide/GuideView";
+import memberGuide from "@/content/memberGuide";
 
 export default function MemberHelpCenter() {
     const primaryColor = "var(--primary)";
 
     const quickLinks = [
-        { title: "Getting Started", icon: Rocket, desc: "New here? Learn the basics of your portal.", href: "/member/dashboard" },
+        { title: "Getting Started", icon: Rocket, desc: "New here? Read the full portal guide below.", href: "#guide" },
         { title: "Savings Guide", icon: PiggyBank, desc: "How to manage your deposits and interest.", href: "/member/savings" },
         { title: "Loan Application", icon: HandCoins, desc: "Step-by-step guide to applying for credit.", href: "/member/loan-applications" },
         { title: "Statements", icon: FileText, desc: "Your yearly statement is on your dashboard.", href: "/member/dashboard" }
@@ -132,7 +135,7 @@ export default function MemberHelpCenter() {
                                 <Mail className="w-5 h-5 flex-shrink-0" />
                                 <div className="text-sm">
                                     <p className="font-semibold">Email Support</p>
-                                    <p className="opacity-80 text-xs">support@wananchimali.com</p>
+                                    <p className="opacity-80 text-xs">{SACCO_CONFIG.supportEmail}</p>
                                 </div>
                             </div>
                             <div className="flex flex-col sm:flex-row items-center gap-4 p-3 bg-white/10 rounded text-center sm:text-left">
@@ -143,12 +146,17 @@ export default function MemberHelpCenter() {
                                 </div>
                             </div>
 
-                            <Button className="w-full bg-white text-[var(--primary)] hover:bg-slate-100 font-semibold mt-4">
-                                Open a Support Ticket
+                            <Button asChild className="w-full bg-white text-[var(--primary)] hover:bg-slate-100 font-semibold mt-4">
+                                <a href={`mailto:${SACCO_CONFIG.supportEmail}`}>Email the office</a>
                             </Button>
                         </CardContent>
                     </Card>
                 </div>
+            </div>
+
+            {/* Full portal guide */}
+            <div id="guide" className="rounded-lg border bg-white">
+                <GuideView markdown={memberGuide} />
             </div>
         </div>
     );

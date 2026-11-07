@@ -17,13 +17,19 @@ import {
     BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
 
-const STATUS_ORDER = { Active: 0, Funded: 1, Defaulted: 2, Closed: 3 };
+const STATUS_ORDER = { Active: 0, Funded: 1, Defaulted: 2, "Written Off": 3, Closed: 4 };
 
 const STATUS_STYLES = {
     Active: "bg-emerald-50 text-emerald-700 border-emerald-100",
     Funded: "bg-emerald-50 text-emerald-700 border-emerald-100",
     Defaulted: "bg-red-50 text-red-700 border-red-100",
+    "Written Off": "bg-red-50 text-red-700 border-red-100",
     Closed: "bg-slate-100 text-slate-600 border-slate-200",
+};
+
+const ARREARS_STYLES = {
+    "In Arrears": "bg-amber-50 text-amber-700 border-amber-100",
+    Defaulted: "bg-red-50 text-red-700 border-red-100",
 };
 
 function LoanRow({ loan }) {
@@ -40,11 +46,21 @@ function LoanRow({ loan }) {
                     </p>
                     <p className="text-xs text-slate-500 break-all">{loan.account_number}</p>
                 </div>
-                <span
-                    className={`shrink-0 inline-flex items-center px-2 py-0.5 rounded border text-[10px] font-bold uppercase tracking-wide ${STATUS_STYLES[loan.status] || STATUS_STYLES.Closed}`}
-                >
-                    {loan.status}
-                </span>
+                <div className="shrink-0 flex flex-col items-end gap-1">
+                    <span
+                        className={`inline-flex items-center px-2 py-0.5 rounded border text-[10px] font-bold uppercase tracking-wide ${STATUS_STYLES[loan.status] || STATUS_STYLES.Closed}`}
+                    >
+                        {loan.status}
+                    </span>
+                    {loan.status === "Active" && ARREARS_STYLES[loan.arrears_stage] && (
+                        <span
+                            className={`inline-flex items-center px-2 py-0.5 rounded border text-[10px] font-bold uppercase tracking-wide ${ARREARS_STYLES[loan.arrears_stage]}`}
+                        >
+                            {loan.arrears_stage}
+                            {loan.days_in_arrears ? ` · ${loan.days_in_arrears}d` : ""}
+                        </span>
+                    )}
+                </div>
             </div>
             <div className="mt-3 grid grid-cols-2 sm:grid-cols-4 gap-3 text-sm">
                 <div>
@@ -107,7 +123,7 @@ function LoansPage() {
         );
     }
 
-    const openLoans = loans.filter((l) => l.status !== "Closed");
+    const openLoans = loans.filter((l) => l.status !== "Closed" && l.status !== "Written Off");
     const totalBalance = openLoans.reduce((sum, l) => sum + Number(l.outstanding_balance || 0), 0);
 
     return (

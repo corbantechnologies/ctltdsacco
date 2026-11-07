@@ -190,7 +190,7 @@ function VenturesTable({ ventures, isLoading, route }) {
               <Button
                 onClick={() => handlePageChange(currentPage - 1)}
                 disabled={currentPage === 1}
-                className="bg-[#067a46] hover:bg-[#c71012] text-white text-sm disabled:opacity-50"
+                className="bg-[#067a46] hover:bg-[var(--accent-hover)] text-white text-sm disabled:opacity-50"
                 aria-label="Previous page"
               >
                 Previous
@@ -212,7 +212,7 @@ function VenturesTable({ ventures, isLoading, route }) {
               <Button
                 onClick={() => handlePageChange(currentPage + 1)}
                 disabled={currentPage === totalPages}
-                className="bg-[#067a46] hover:bg-[#c71012] text-white text-sm disabled:opacity-50"
+                className="bg-[#067a46] hover:bg-[var(--accent-hover)] text-white text-sm disabled:opacity-50"
                 aria-label="Next page"
               >
                 Next

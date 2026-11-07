@@ -88,7 +88,7 @@ function LoanProductsTable({ loanTypes }) {
         <div className=" rounded shadow-md overflow-hidden">
           <Table>
             <TableHeader>
-              <TableRow className="bg-[#ea1315] hover:bg-[#ea1315]">
+              <TableRow className="bg-[var(--accent)] hover:bg-[var(--accent)]">
                 <TableHead className="text-white font-semibold text-base">
                   Name
                 </TableHead>
@@ -133,7 +133,7 @@ function LoanProductsTable({ loanTypes }) {
               <Button
                 onClick={() => handlePageChange(currentPage - 1)}
                 disabled={currentPage === 1}
-                className="bg-[#ea1315] hover:bg-[#c71012] text-white text-sm disabled:opacity-50"
+                className="bg-[var(--accent)] hover:bg-[var(--accent-hover)] text-white text-sm disabled:opacity-50"
                 aria-label="Previous page"
               >
                 Previous
@@ -144,8 +144,8 @@ function LoanProductsTable({ loanTypes }) {
                     onClick={() => handlePageChange(page)}
                     variant={currentPage === page ? "default" : "outline"}
                     className={`${currentPage === page
-                      ? "bg-[#ea1315] text-white"
-                      : "border-[#ea1315]  hover:bg-[#ea1315] hover:text-white"
+                      ? "bg-[var(--accent)] text-white"
+                      : "border-[var(--accent)]  hover:bg-[var(--accent)] hover:text-white"
                       } text-sm`}
                     aria-label={`Go to page ${page}`}
                   >
@@ -155,7 +155,7 @@ function LoanProductsTable({ loanTypes }) {
               <Button
                 onClick={() => handlePageChange(currentPage + 1)}
                 disabled={currentPage === totalPages}
-                className="bg-[#ea1315] hover:bg-[#c71012] text-white text-sm disabled:opacity-50"
+                className="bg-[var(--accent)] hover:bg-[var(--accent-hover)] text-white text-sm disabled:opacity-50"
                 aria-label="Next page"
               >
                 Next

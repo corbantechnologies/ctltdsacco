@@ -7,7 +7,7 @@ const MembersCountCard = ({ count }) => (
     <Flex direction="column" gap="2">
       <Flex align="center" gap="2">
         <Users className="h-6 w-6 " />
-        <Text size="5" weight="bold" style={{ color: '#ea1315' }}>
+        <Text size="5" weight="bold" style={{ color: 'var(--accent)' }}>
           Total Members
         </Text>
       </Flex>

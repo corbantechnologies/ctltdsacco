@@ -81,7 +81,7 @@ function LoansTable({ loans, isLoading, route }) {
     return (
       <Card>
         <CardHeader>
-          <CardTitle className="text-xl text-[#045e32]">My Loans</CardTitle>
+          <CardTitle className="text-xl text-[var(--primary)]">My Loans</CardTitle>
         </CardHeader>
         <CardContent>
           <div className="text-center text-gray-700">No loans found.</div>
@@ -93,7 +93,7 @@ function LoansTable({ loans, isLoading, route }) {
   return (
     <Card>
       <CardHeader>
-        <CardTitle className="text-xl text-[#045e32]">My Loans</CardTitle>
+        <CardTitle className="text-xl text-[var(--primary)]">My Loans</CardTitle>
       </CardHeader>
       <CardContent>
         <div className="space-y-4">
@@ -112,7 +112,7 @@ function LoansTable({ loans, isLoading, route }) {
                 setFilterType(e.target.value);
                 setCurrentPage(1); // Reset to first page on filter change
               }}
-              className="w-[200px] h-10 px-3 py-2 rounded border border-gray-300 bg-white text-sm text-gray-700 focus:outline-none focus:ring-2 focus:ring-[#045e32] focus:border-transparent"
+              className="w-[200px] h-10 px-3 py-2 rounded border border-gray-300 bg-white text-sm text-gray-700 focus:outline-none focus:ring-2 focus:ring-[var(--primary)] focus:border-transparent"
               aria-label="Filter by loan type"
             >
               {loanTypes.map((type) => (
@@ -178,7 +178,7 @@ function LoansTable({ loans, isLoading, route }) {
                     <TableCell className="text-sm text-gray-700">
                       <Link
                         href={`/${route || "member"}/loans/${loan?.reference || loan?.account_number || loan?.identity}`}
-                        className="text-[#045e32] hover:underline cursor-pointer"
+                        className="text-[var(--primary)] hover:underline cursor-pointer"
                       >
                         View
                       </Link>
@@ -200,7 +200,7 @@ function LoansTable({ loans, isLoading, route }) {
               <Button
                 onClick={() => handlePageChange(currentPage - 1)}
                 disabled={currentPage === 1}
-                className="bg-[#045e32] hover:bg-[#067a46] text-white text-sm disabled:opacity-50"
+                className="bg-[var(--primary)] hover:bg-[#067a46] text-white text-sm disabled:opacity-50"
                 aria-label="Previous page"
               >
                 Previous
@@ -214,8 +214,8 @@ function LoansTable({ loans, isLoading, route }) {
                     onClick={() => handlePageChange(page)}
                     variant={currentPage === page ? "default" : "outline"}
                     className={`${currentPage === page
-                        ? "bg-[#045e32] text-white"
-                        : "border-[#045e32] text-[#045e32] hover:bg-[#045e32] hover:text-white"
+                        ? "bg-[var(--primary)] text-white"
+                        : "border-[var(--primary)] text-[var(--primary)] hover:bg-[var(--primary)] hover:text-white"
                       } text-sm`}
                     aria-label={`Go to page ${page}`}
                   >
@@ -226,7 +226,7 @@ function LoansTable({ loans, isLoading, route }) {
               <Button
                 onClick={() => handlePageChange(currentPage + 1)}
                 disabled={currentPage === totalPages}
-                className="bg-[#045e32] hover:bg-[#067a46] text-white text-sm disabled:opacity-50"
+                className="bg-[var(--primary)] hover:bg-[#067a46] text-white text-sm disabled:opacity-50"
                 aria-label="Next page"
               >
                 Next

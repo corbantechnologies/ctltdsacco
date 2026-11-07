@@ -153,7 +153,7 @@ function CreateWithdrawal({ isOpen, onClose, account, refetchAccount }) {
                   type="submit"
                   size="sm"
                   disabled={loading || available === 0}
-                  className="bg-primary hover:bg-[#022007] text-white text-sm sm:text-base py-2 px-3 sm:px-4 w-full sm:w-auto"
+                  className="bg-primary hover:bg-[var(--primary-hover)] text-white text-sm sm:text-base py-2 px-3 sm:px-4 w-full sm:w-auto"
                 >
                   {loading ? "Sending..." : "Send request"}
                 </Button>

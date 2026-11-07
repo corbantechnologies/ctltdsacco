@@ -268,7 +268,7 @@ function VentureDepositsTable({ deposits }) {
             <Button
               onClick={() => handlePageChange(currentPage - 1)}
               disabled={currentPage === 1}
-              className="bg-primary hover:bg-[#022007] text-white text-sm disabled:opacity-50"
+              className="bg-primary hover:bg-[var(--primary-hover)] text-white text-sm disabled:opacity-50"
             >
               Previous
             </Button>
@@ -288,7 +288,7 @@ function VentureDepositsTable({ deposits }) {
             <Button
               onClick={() => handlePageChange(currentPage + 1)}
               disabled={currentPage === totalPages}
-              className="bg-primary hover:bg-[#022007] text-white text-sm disabled:opacity-50"
+              className="bg-primary hover:bg-[var(--primary-hover)] text-white text-sm disabled:opacity-50"
             >
               Next
             </Button>

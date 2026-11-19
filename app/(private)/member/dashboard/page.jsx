@@ -32,13 +32,13 @@ const MemberDashboardSkeleton = () => (
       </div>
       <div className="h-10 w-32 bg-slate-200 rounded" />
     </div>
-    <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+    <div className="grid grid-cols-2 xl:grid-cols-4 gap-3">
       <div className="h-16 bg-slate-200 rounded-xl" />
       <div className="h-16 bg-slate-200 rounded-xl" />
       <div className="h-16 bg-slate-200 rounded-xl" />
       <div className="h-16 bg-slate-200 rounded-xl" />
     </div>
-    <div className="grid gap-4 md:gap-6 md:grid-cols-3">
+    <div className="grid gap-4 md:gap-6 xl:grid-cols-3">
       <div className="h-28 bg-slate-200 rounded-lg" />
       <div className="h-28 bg-slate-200 rounded-lg" />
       <div className="h-28 bg-slate-200 rounded-lg" />
@@ -128,10 +128,10 @@ function MemberDashboard() {
       </div>
 
       {/* Quick Action Ribbon */}
-      <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+      <div className="grid grid-cols-2 xl:grid-cols-4 gap-3">
         <Link href="/member/loan-applications" className="group">
-          <div className="flex items-center gap-3 p-3.5 bg-white border border-slate-100 rounded-xl shadow-xs hover:border-[var(--primary)] hover:shadow-sm transition-all">
-            <div className="p-2.5 rounded-lg bg-amber-50 text-[var(--primary)] group-hover:bg-[var(--primary)] group-hover:text-white transition-colors">
+          <div className="flex h-full items-center gap-3 p-3.5 bg-white border border-slate-100 rounded-xl shadow-xs hover:border-[var(--primary)] hover:shadow-sm transition-all">
+            <div className="shrink-0 p-2.5 rounded-lg bg-amber-50 text-[var(--primary)] group-hover:bg-[var(--primary)] group-hover:text-white transition-colors">
               <Plus className="w-5 h-5" />
             </div>
             <div>
@@ -142,8 +142,8 @@ function MemberDashboard() {
         </Link>
 
         <Link href={primaryLoanHref} className="group">
-          <div className="flex items-center gap-3 p-3.5 bg-white border border-slate-100 rounded-xl shadow-xs hover:border-orange-500 hover:shadow-sm transition-all">
-            <div className="p-2.5 rounded-lg bg-orange-50 text-orange-600 group-hover:bg-orange-600 group-hover:text-white transition-colors">
+          <div className="flex h-full items-center gap-3 p-3.5 bg-white border border-slate-100 rounded-xl shadow-xs hover:border-orange-500 hover:shadow-sm transition-all">
+            <div className="shrink-0 p-2.5 rounded-lg bg-orange-50 text-orange-600 group-hover:bg-orange-600 group-hover:text-white transition-colors">
               <CreditCard className="w-5 h-5" />
             </div>
             <div>
@@ -154,8 +154,8 @@ function MemberDashboard() {
         </Link>
 
         <Link href="/member/savings" className="group">
-          <div className="flex items-center gap-3 p-3.5 bg-white border border-slate-100 rounded-xl shadow-xs hover:border-emerald-500 hover:shadow-sm transition-all">
-            <div className="p-2.5 rounded-lg bg-emerald-50 text-emerald-600 group-hover:bg-emerald-600 group-hover:text-white transition-colors">
+          <div className="flex h-full items-center gap-3 p-3.5 bg-white border border-slate-100 rounded-xl shadow-xs hover:border-emerald-500 hover:shadow-sm transition-all">
+            <div className="shrink-0 p-2.5 rounded-lg bg-emerald-50 text-emerald-600 group-hover:bg-emerald-600 group-hover:text-white transition-colors">
               <PiggyBank className="w-5 h-5" />
             </div>
             <div>
@@ -166,8 +166,8 @@ function MemberDashboard() {
         </Link>
 
         <Link href="/member/guarantorprofile" className="group">
-          <div className="flex items-center gap-3 p-3.5 bg-white border border-slate-100 rounded-xl shadow-xs hover:border-blue-500 hover:shadow-sm transition-all">
-            <div className="p-2.5 rounded-lg bg-blue-50 text-blue-600 group-hover:bg-blue-600 group-hover:text-white transition-colors">
+          <div className="flex h-full items-center gap-3 p-3.5 bg-white border border-slate-100 rounded-xl shadow-xs hover:border-blue-500 hover:shadow-sm transition-all">
+            <div className="shrink-0 p-2.5 rounded-lg bg-blue-50 text-blue-600 group-hover:bg-blue-600 group-hover:text-white transition-colors">
               <ShieldCheck className="w-5 h-5" />
             </div>
             <div>
@@ -179,7 +179,7 @@ function MemberDashboard() {
       </div>
 
       {/* Financial Net Standing Grid */}
-      <div className="grid gap-4 md:gap-6 md:grid-cols-3">
+      <div className="grid gap-4 md:gap-6 xl:grid-cols-3">
         <Card className="border-none shadow-sm bg-white overflow-hidden relative">
           <div className="absolute top-0 left-0 right-0 h-1 bg-[var(--primary)]" />
           <CardHeader className="flex flex-row items-center justify-between pb-2 pt-5">
@@ -191,7 +191,7 @@ function MemberDashboard() {
             </div>
           </CardHeader>
           <CardContent className="space-y-1">
-            <div className="text-2xl font-bold tracking-tight text-slate-900 font-mono">
+            <div className="text-lg sm:text-xl xl:text-2xl font-bold tracking-tight text-slate-900 tabular-nums break-words">
               {formatCurrency(totalSavings)}
             </div>
             <p className="text-xs text-slate-500 font-medium">
@@ -211,7 +211,7 @@ function MemberDashboard() {
             </div>
           </CardHeader>
           <CardContent className="space-y-1">
-            <div className="text-2xl font-bold tracking-tight text-slate-900 font-mono">
+            <div className="text-lg sm:text-xl xl:text-2xl font-bold tracking-tight text-slate-900 tabular-nums break-words">
               {formatCurrency(totalOutstandingLoan)}
             </div>
             <p className="text-xs text-slate-500 font-medium">
@@ -235,7 +235,7 @@ function MemberDashboard() {
             </div>
           </CardHeader>
           <CardContent className="space-y-1">
-            <div className="text-2xl font-bold tracking-tight text-slate-900 font-mono">
+            <div className="text-lg sm:text-xl xl:text-2xl font-bold tracking-tight text-slate-900 tabular-nums break-words">
               {formatCurrency(availableGuarantorAmount)}
             </div>
             <p className="text-xs text-slate-500 font-medium">
@@ -246,9 +246,9 @@ function MemberDashboard() {
       </div>
 
       {/* Breakdown: Savings & Active Loans */}
-      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-5">
+      <div className="grid gap-6 xl:grid-cols-5">
         {/* Savings Breakdown */}
-        <Card className="col-span-1 lg:col-span-3 shadow-sm border-none bg-white h-full">
+        <Card className="col-span-1 xl:col-span-3 shadow-sm border-none bg-white h-full">
           <CardHeader className="flex flex-row items-center justify-between pb-3 border-b border-slate-50">
             <CardTitle className="text-base font-semibold flex items-center gap-2 text-slate-900">
               <Wallet className="h-5 w-5 text-[var(--primary)]" />
@@ -277,7 +277,7 @@ function MemberDashboard() {
         </Card>
 
         {/* Active Loans */}
-        <Card className="col-span-1 lg:col-span-2 shadow-sm border-none bg-white h-full">
+        <Card className="col-span-1 xl:col-span-2 shadow-sm border-none bg-white h-full">
           <CardHeader className="flex flex-row items-center justify-between pb-3 border-b border-slate-50">
             <CardTitle className="text-base font-semibold flex items-center gap-2 text-slate-900">
               <TrendingUp className="h-5 w-5 text-orange-600" />

@@ -6,7 +6,7 @@ const SavingsCard = ({ account, memberPath = "member" }) => {
   const ref = account?.reference || account?.account_number;
   return (
     <Link href={`/${memberPath}/savings/${ref}`}>
-      <div className="flex items-center justify-between p-4 bg-white border border-slate-100 rounded hover:bg-slate-50 transition-colors shadow-sm cursor-pointer mb-2">
+      <div className="flex flex-wrap items-center justify-between gap-x-3 gap-y-2 p-4 bg-white border border-slate-100 rounded hover:bg-slate-50 transition-colors shadow-sm cursor-pointer mb-2">
         <div className="space-y-1">
           <p className="text-sm font-medium leading-none text-gray-900">
             {account?.account_type}
@@ -15,7 +15,7 @@ const SavingsCard = ({ account, memberPath = "member" }) => {
             {account?.account_number}
           </p>
         </div>
-        <div className="font-bold text-primary">
+        <div className="shrink-0 text-right font-bold text-primary">
           {formatCurrency(account?.balance)}
         </div>
       </div>

@@ -229,7 +229,7 @@ function LoanDetail() {
                                             </div>
                                         </div>
                                         <div className="text-left sm:text-right pl-12 sm:pl-0">
-                                            <p className="text-xl sm:text-2xl font-bold text-[var(--accent)]">{formatCurrency(loan.outstanding_balance)}</p>
+                                            <p className="text-lg sm:text-xl xl:text-2xl font-bold break-words text-[var(--accent)]">{formatCurrency(loan.outstanding_balance)}</p>
                                             <p className="text-[11px] text-muted-foreground">Current total owed</p>
                                         </div>
                                     </div>
@@ -243,13 +243,14 @@ function LoanDetail() {
                                             <div>
                                                 <p className="text-xs font-semibold uppercase tracking-wider text-slate-600">Outstanding Principal</p>
                                                 <p className="text-xs text-muted-foreground">
-                                                    Original Disbursed: <span className="font-medium text-slate-700">{formatCurrency(loan.principal)}</span>
+                                                    {loan.onboarding_method === "balance_forward" ? "Principal at cut-off" : "Original Disbursed"}:{" "}
+                                                    <span className="font-medium text-slate-700">{formatCurrency(loan.principal)}</span>
                                                     {" "}• Paid: <span className="font-medium text-emerald-700">{formatCurrency(loan.total_principal_paid || 0)}</span>
                                                 </p>
                                             </div>
                                         </div>
                                         <div className="text-left sm:text-right pl-12 sm:pl-0">
-                                            <p className="text-xl sm:text-2xl font-bold text-green-700">
+                                            <p className="text-lg sm:text-xl xl:text-2xl font-bold break-words text-green-700">
                                                 {formatCurrency(loan.outstanding_principal ?? (parseFloat(loan.principal || 0) - parseFloat(loan.total_principal_paid || 0)))}
                                             </p>
                                             <p className="text-[11px] text-muted-foreground">Principal remaining to repay</p>
@@ -271,7 +272,7 @@ function LoanDetail() {
                                             </div>
                                         </div>
                                         <div className="text-left sm:text-right pl-12 sm:pl-0">
-                                            <p className="text-xl sm:text-2xl font-bold text-slate-900">{formatCurrency(loan.total_interest_accrued)}</p>
+                                            <p className="text-lg sm:text-xl xl:text-2xl font-bold break-words text-slate-900">{formatCurrency(loan.total_interest_accrued)}</p>
                                             <p className="text-[11px] text-muted-foreground">Total interest charged</p>
                                         </div>
                                     </div>
@@ -288,7 +289,7 @@ function LoanDetail() {
                                             </div>
                                         </div>
                                         <div className="text-left sm:text-right pl-12 sm:pl-0">
-                                            <p className="text-xl sm:text-2xl font-bold text-[var(--primary)]">{formatCurrency(loan.total_loan_amount)}</p>
+                                            <p className="text-lg sm:text-xl xl:text-2xl font-bold break-words text-[var(--primary)]">{formatCurrency(loan.total_loan_amount)}</p>
                                             <p className="text-[11px] text-muted-foreground">Total loan commitment</p>
                                         </div>
                                     </div>
@@ -305,7 +306,7 @@ function LoanDetail() {
                                             </div>
                                         </div>
                                         <div className="text-left sm:text-right pl-12 sm:pl-0">
-                                            <p className="text-xl sm:text-2xl font-bold text-red-600">
+                                            <p className="text-lg sm:text-xl xl:text-2xl font-bold break-words text-red-600">
                                                 {formatCurrency((loan?.processing_fees || []).filter(f => f.status === 'Pending').reduce((acc, f) => acc + (parseFloat(f.amount) || 0) - (parseFloat(f.amount_paid) || 0), 0))}
                                             </p>
                                             <p className="text-[11px] text-muted-foreground">Outstanding fee amount</p>
@@ -341,6 +342,14 @@ function LoanDetail() {
                             <Card className="lg:col-span-7">
                                 <CardHeader><CardTitle>Loan Terms</CardTitle></CardHeader>
                                 <CardContent className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-4 text-sm">
+                                    {(loan.onboarding_method === "balance_forward" || loan.onboarding_method === "paid_to_date") && loan.cut_off_date && (
+                                        <div className="sm:col-span-2 rounded border border-slate-200 bg-slate-50 p-3 text-xs text-slate-600">
+                                            {loan.onboarding_method === "balance_forward"
+                                                ? `This loan was brought forward from the SACCO's records with its balance on ${formatDate(loan.cut_off_date)}. The schedule starts from that date.`
+                                                : `Repayments made before ${formatDate(loan.cut_off_date)} were brought forward from the SACCO's records as one payment.`}
+                                            {loan.original_principal ? ` Original loan: ${formatCurrency(loan.original_principal)}${loan.original_start_date ? ` on ${formatDate(loan.original_start_date)}` : ""}.` : ""}
+                                        </div>
+                                    )}
                                     <div><span className="text-muted-foreground">Start Date</span><p className="font-medium">{formatDate(loan.start_date)}</p></div>
                                     <div><span className="text-muted-foreground">End Date</span><p className="font-medium">{formatDate(loan.end_date)}</p></div>
                                     <div>

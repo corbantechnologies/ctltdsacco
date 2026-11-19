@@ -19,14 +19,14 @@ const LoanCard = ({ loan, memberPath = "member" }) => {
             {loan.status}
           </span>
         </div>
-        <div className="flex justify-between items-end">
+        <div className="flex justify-between items-end gap-3">
           <div>
             <p className="text-xs text-muted-foreground mb-0.5">Balance</p>
             <p className="font-bold text-gray-900">
               {formatCurrency(loan.outstanding_balance)}
             </p>
           </div>
-          <div className="text-right">
+          <div className="shrink-0 text-right">
             <p className="text-xs text-muted-foreground mb-0.5">Due Date</p>
             <p className="text-sm text-gray-700 font-medium">
               {nextDueDate

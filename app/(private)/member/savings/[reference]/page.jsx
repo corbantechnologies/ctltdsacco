@@ -346,7 +346,7 @@ function SavingsDetail() {
             <CardContent className="p-5 flex items-center justify-between">
               <div>
                 <p className="text-xs font-medium text-slate-500 uppercase tracking-wider">Available Balance</p>
-                <p className="text-2xl font-bold text-slate-900 mt-1">
+                <p className="text-lg sm:text-xl xl:text-2xl font-bold text-slate-900 mt-1 break-words">
                   {formatCurrency(saving.balance)}
                 </p>
               </div>
@@ -360,7 +360,7 @@ function SavingsDetail() {
             <CardContent className="p-5 flex items-center justify-between">
               <div>
                 <p className="text-xs font-medium text-slate-500 uppercase tracking-wider">Total Deposited</p>
-                <p className="text-2xl font-bold text-emerald-600 mt-1">
+                <p className="text-lg sm:text-xl xl:text-2xl font-bold text-emerald-600 mt-1 break-words">
                   {formatCurrency(stats.totalDeposits)}
                 </p>
               </div>
@@ -374,7 +374,7 @@ function SavingsDetail() {
             <CardContent className="p-5 flex items-center justify-between">
               <div>
                 <p className="text-xs font-medium text-slate-500 uppercase tracking-wider">Total Withdrawals</p>
-                <p className="text-2xl font-bold text-slate-700 mt-1">
+                <p className="text-lg sm:text-xl xl:text-2xl font-bold text-slate-700 mt-1 break-words">
                   {formatCurrency(stats.totalWithdrawals)}
                 </p>
               </div>
@@ -388,7 +388,7 @@ function SavingsDetail() {
             <CardContent className="p-5 flex items-center justify-between">
               <div>
                 <p className="text-xs font-medium text-slate-500 uppercase tracking-wider">Interest Rate</p>
-                <p className="text-2xl font-bold text-slate-900 mt-1">
+                <p className="text-lg sm:text-xl xl:text-2xl font-bold text-slate-900 mt-1 break-words">
                   {saving.account_type_details?.interest_rate ? `${saving.account_type_details.interest_rate}% p.a` : "N/A"}
                 </p>
               </div>

@@ -54,7 +54,8 @@ export function MemberSidebarProvider({ children }) {
   );
 }
 
-const MENU_LINKS = [
+// Built when the menu renders, so it follows the SACCO Settings switches.
+const getMenuLinks = () => [
   { label: "Dashboard", href: "/member/dashboard", icon: LayoutDashboard },
   { label: "My Savings", href: "/member/savings", icon: PiggyBank },
   ...(SACCO_CONFIG.enableWithdrawals
@@ -107,7 +108,7 @@ function MemberNavbar() {
 
       {/* Navigation Links */}
       <nav className="flex-1 overflow-y-auto p-3 space-y-1.5">
-        {MENU_LINKS.map((link) => {
+        {getMenuLinks().map((link) => {
           const isActive = pathname === link.href || pathname.startsWith(link.href + "/");
           const Icon = link.icon;
           return (
